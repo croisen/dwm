@@ -1,2 +1,18 @@
 ColumnLimit: 80
 IndentWidth: 4
+
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
+AlignOperands: true
+AlignTrailingComments: true
+
+AlignConsecutiveAssignments:
+    Enabled: true
+    AcrossComments: true
+    AcrossEmptyLines: true
+    AlignCompound: true
+
+AlignConsecutiveMacros:
+    Enabled: true
+    AcrossComments: true
+    AcrossEmptyLines: true

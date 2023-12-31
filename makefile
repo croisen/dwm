@@ -24,6 +24,7 @@ dwm: ${COMP_OBJS} ${PATCH_OBJS}
 
 clean:
 	rm -f dwm
+	rm -f *.o
 	rm -f component/*.o
 	rm -f component/patch_comps/*.o
 	rm -f dwm-${VERSION}.tar.gz

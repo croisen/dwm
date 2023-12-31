@@ -10,17 +10,17 @@
     (MAX(0, MIN((x) + (w), (m)->wx + (m)->ww) - MAX((x), (m)->wx)) *           \
      MAX(0, MIN((y) + (h), (m)->wy + (m)->wh) - MAX((y), (m)->wy)))
 #define ISVISIBLE(C) ((C->tags & C->mon->tagset[C->mon->seltags]))
-#define HIDDEN(C) ((getstate(C->win) == IconicState))
-#define LENGTH(X) (sizeof X / sizeof X[0])
-#define MOUSEMASK (BUTTONMASK | PointerMotionMask)
-#define WIDTH(X) ((X)->w + 2 * (X)->bw)
-#define HEIGHT(X) ((X)->h + 2 * (X)->bw)
-#define TAGMASK ((1 << LENGTH(tags)) - 1)
-#define TEXTW(X) (drw_fontset_getwidth(drw, (X)) + lrpad)
+#define HIDDEN(C)    ((getstate(C->win) == IconicState))
+#define LENGTH(X)    (sizeof X / sizeof X[0])
+#define MOUSEMASK    (BUTTONMASK | PointerMotionMask)
+#define WIDTH(X)     ((X)->w + 2 * (X)->bw)
+#define HEIGHT(X)    ((X)->h + 2 * (X)->bw)
+#define TAGMASK      ((1 << LENGTH(tags)) - 1)
+#define TEXTW(X)     (drw_fontset_getwidth(drw, (X)) + lrpad)
 
-#define VERSION "6.4"
-#define ALTKEY Mod1Mask
-#define MODKEY Mod4Mask
+#define VERSION      "6.4"
+#define ALTKEY       Mod1Mask
+#define MODKEY       Mod4Mask
 #define TAGKEYS(KEY, TAG)                                                      \
     {MODKEY, KEY, view, {.ui = 1 << TAG}},                                     \
         {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},             \

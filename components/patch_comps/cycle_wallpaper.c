@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char main_cmd[] = "feh --bg-scale --no-fehbg ";
+char main_cmd[]     = "feh --bg-scale --no-fehbg ";
 int wallpaper_index = 0;
 
 void set_wallpaper() {
@@ -22,7 +22,7 @@ void set_wallpaper() {
 
 void cycle_wallpaper_forward(const Arg *arg) {
     (void)arg;
-    long int size = sizeof(wallpapers) / sizeof(wallpapers[0]);
+    long int size   = sizeof(wallpapers) / sizeof(wallpapers[0]);
 
     wallpaper_index = (wallpaper_index + 1) % size;
     set_wallpaper();
@@ -30,7 +30,7 @@ void cycle_wallpaper_forward(const Arg *arg) {
 
 void cycle_wallpaper_backward(const Arg *arg) {
     (void)arg;
-    long int size = sizeof(wallpapers) / sizeof(wallpapers[0]);
+    long int size   = sizeof(wallpapers) / sizeof(wallpapers[0]);
 
     wallpaper_index = (wallpaper_index + size - 1) % size;
     set_wallpaper();
