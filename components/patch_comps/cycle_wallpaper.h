@@ -5,6 +5,7 @@
 
 extern int wallpaper_index;
 
+void set_wallpaper();
 void cycle_wallpaper_forward(const Arg *arg);
 void cycle_wallpaper_backward(const Arg *arg);
 

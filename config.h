@@ -48,8 +48,8 @@ const Rule rules[] = {
   */
   /* class      instance    title       tags mask     isfloating   monitor */
     {"kitty",   NULL, NULL, 1 << 1, 0, -1},
-    {"thunar",  NULL, NULL, 1 << 2, 0, -1},
-    {"spotify", NULL, NULL, 1 << 7, 0, -1},
+    {"Thunar",  NULL, NULL, 1 << 2, 0, -1},
+    {"Spotify", NULL, NULL, 1 << 7, 0, -1},
     {"firefox", NULL, NULL, 1 << 8, 0, -1},
 };
 
@@ -77,15 +77,17 @@ const Key keys[] = {
     {ALTKEY,             XK_b,                     spawn,                    firefox           },
     {ALTKEY,             XK_e,                     spawn,                    thunar            },
     {ALTKEY,             XK_m,                     spawn,                    spotify           },
-    {ALTKEY,             XK_c,                     cycle_wallpaper_forward,  {0}               },
-    {ALTKEY | ShiftMask, XK_c,                     cycle_wallpaper_backward, {0}               },
+    {ALTKEY,             XK_w,                     cycle_wallpaper_forward,  {0}               },
+    {ALTKEY | ShiftMask, XK_w,                     cycle_wallpaper_backward, {0}               },
 
     {0,                  XK_Print,                 spawn,
      SHCMD("scrot ~/Pictures/'Screenshot_%Y-%m-%d_%H_%M_%S.png'")                              },
 
     {0,                  XF86XK_AudioMute,         spawn,                    mute_vol          },
     {0,                  XF86XK_AudioRaiseVolume,  spawn,                    raise_vol         },
+    {ShiftMask,          XF86XK_AudioRaiseVolume,  spawn,                    max_vol           },
     {0,                  XF86XK_AudioLowerVolume,  spawn,                    down_vol          },
+    {ShiftMask,          XF86XK_AudioLowerVolume,  spawn,                    zero_vol          },
 
     {0,                  XF86XK_MonBrightnessUp,   spawn,                    bright            },
     {0,                  XF86XK_MonBrightnessDown, spawn,                    dimmer            },

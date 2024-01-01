@@ -25,6 +25,7 @@
 #include "components/drw.h"
 #include "components/enums.h"
 #include "components/macros.h"
+#include "components/patch_comps/cycle_wallpaper.h"
 #include "components/patch_comps/restart_sig.h"
 #include "components/u_structs.h"
 #include "components/util.h"
@@ -2152,6 +2153,7 @@ int main(int argc, char *argv[]) {
 #endif /* __OpenBSD__ */
     scan();
     runautostart();
+    set_wallpaper();
     run();
 
     if (restart) {
