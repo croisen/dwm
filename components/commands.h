@@ -1,21 +1,23 @@
 #ifndef ___DWM_6_4_COMMANDS___
 #define ___DWM_6_4_COMMANDS___
 
+#include "macros.h"
+#include "u_structs.h"
 #include <stdlib.h>
 
-static const char *mute_vol[]  = {"wpctl", "set-mute", "@DEFAULT_SINK@",
-                                  "toggle", NULL};
-static const char *raise_vol[] = {"wpctl", "set-volume", "@DEFAULT_SINK@",
-                                  "2%+", NULL};
-static const char *down_vol[] = {"wpctl", "set-volume", "@DEFAULT_SINK@", "2%-",
-                                 NULL};
-static const char *dimmer[]   = {"xbacklight", "-", "5%", NULL};
-static const char *bright[]   = {"xbacklight", "+", "5%", NULL};
+static const Arg mute_vol = SHCMD(
+    "wpctl set-mute @DEFAULT_SINK@ toggle && kill -USR1 $(pgrep slstatus)");
+static const Arg raise_vol = SHCMD(
+    "wpctl set-volume @DEFAULT_SINK@ 2%+ && kill -USR1 $(pgrep slstatus)");
+static const Arg down_vol = SHCMD(
+    "wpctl set-volume @DEFAULT_SINK@ 2%- && kill -USR1 $(pgrep slstatus)");
+static const Arg dimmer  = SHCMD("xbacklight - 5%");
+static const Arg bright  = SHCMD("xbacklight + 5%");
 
-static const char *termcmd[]  = {"kitty", NULL};
-static const char *thunar[]   = {"thunar", NULL};
-static const char *spotify[]  = {"LD_PRELOAD=/usr/lib/spotify-adblock.so",
-                                 "spotify", NULL};
-static const char *firefox[]  = {"firefox", NULL};
+static const Arg termcmd = SHCMD("kitty");
+static const Arg thunar  = SHCMD("thunar");
+static const Arg spotify =
+    SHCMD("LD_PRELOAD=/usr/lib/spotify-adblock.so spotify");
+static const Arg firefox = SHCMD("firefox");
 
 #endif

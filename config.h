@@ -47,7 +47,6 @@ const Rule rules[] = {
   *	WM_NAME(STRING) = title
   */
   /* class      instance    title       tags mask     isfloating   monitor */
-    {"Gimp",    NULL, NULL, 0,      1, -1},
     {"kitty",   NULL, NULL, 1 << 1, 0, -1},
     {"thunar",  NULL, NULL, 1 << 2, 0, -1},
     {"spotify", NULL, NULL, 1 << 7, 0, -1},
@@ -55,7 +54,7 @@ const Rule rules[] = {
 };
 
 /* layout(s) */
-const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+const float mfact        = 0.50; /* factor of master area size [0.05..0.95] */
 const int nmaster        = 1;    /* number of clients in master area */
 const int resizehints    = 1; /* 1 means respect size hints in tiled resizals */
 const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -75,24 +74,24 @@ const char *dmenucmd[] = {
 
 const Key keys[] = {
   /* modifier                     key        function        argument */
-    {ALTKEY,             XK_b,                     spawn,                    {.v = firefox}    },
-    {ALTKEY,             XK_e,                     spawn,                    {.v = thunar}     },
-    {ALTKEY,             XK_m,                     spawn,                    {.v = spotify}    },
-    {MODKEY,             XK_c | XK_w,              cycle_wallpaper_forward,  {0}               },
-    {MODKEY | ShiftMask, XK_c | XK_w,              cycle_wallpaper_backward, {0}               },
+    {ALTKEY,             XK_b,                     spawn,                    firefox           },
+    {ALTKEY,             XK_e,                     spawn,                    thunar            },
+    {ALTKEY,             XK_m,                     spawn,                    spotify           },
+    {ALTKEY,             XK_c,                     cycle_wallpaper_forward,  {0}               },
+    {ALTKEY | ShiftMask, XK_c,                     cycle_wallpaper_backward, {0}               },
 
     {0,                  XK_Print,                 spawn,
      SHCMD("scrot ~/Pictures/'Screenshot_%Y-%m-%d_%H_%M_%S.png'")                              },
 
-    {0,                  XF86XK_AudioMute,         spawn,                    {.v = mute_vol}   },
-    {0,                  XF86XK_AudioRaiseVolume,  spawn,                    {.v = raise_vol}  },
-    {0,                  XF86XK_AudioLowerVolume,  spawn,                    {.v = down_vol}   },
+    {0,                  XF86XK_AudioMute,         spawn,                    mute_vol          },
+    {0,                  XF86XK_AudioRaiseVolume,  spawn,                    raise_vol         },
+    {0,                  XF86XK_AudioLowerVolume,  spawn,                    down_vol          },
 
-    {0,                  XF86XK_MonBrightnessUp,   spawn,                    {.v = bright}     },
-    {0,                  XF86XK_MonBrightnessDown, spawn,                    {.v = dimmer}     },
+    {0,                  XF86XK_MonBrightnessUp,   spawn,                    bright            },
+    {0,                  XF86XK_MonBrightnessDown, spawn,                    dimmer            },
 
     {MODKEY,             XK_r,                     spawn,                    {.v = dmenucmd}   },
-    {MODKEY | ShiftMask, XK_Return,                spawn,                    {.v = termcmd}    },
+    {MODKEY | ShiftMask, XK_Return,                spawn,                    termcmd           },
     {MODKEY,             XK_b,                     togglebar,                {0}               },
     {MODKEY,             XK_j,                     focusstackvis,            {.i = +1}         },
     {MODKEY,             XK_k,                     focusstackvis,            {.i = -1}         },
@@ -141,7 +140,7 @@ const Button buttons[] = {
     {ClkLtSymbol,   0,      Button3, setlayout,      {.v = &layouts[2]}},
     {ClkWinTitle,   0,      Button1, togglewin,      {0}               },
     {ClkWinTitle,   0,      Button2, zoom,           {0}               },
-    {ClkStatusText, 0,      Button2, spawn,          {.v = termcmd}    },
+    {ClkStatusText, 0,      Button2, spawn,          termcmd           },
     {ClkClientWin,  MODKEY, Button1, movemouse,      {0}               },
     {ClkClientWin,  MODKEY, Button2, togglefloating, {0}               },
     {ClkClientWin,  MODKEY, Button3, resizemouse,    {0}               },

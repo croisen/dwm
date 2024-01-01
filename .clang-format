@@ -6,6 +6,8 @@ AlignArrayOfStructures: Left
 AlignOperands: true
 AlignTrailingComments: true
 
+IndentCaseLabels: false
+
 AlignConsecutiveAssignments:
     Enabled: true
     AcrossComments: true
