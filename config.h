@@ -7,6 +7,7 @@
 #include "components/u_structs.h"
 #include "d_patches/awesome_bar.h"
 #include "d_patches/cycle_wallpaper.h"
+#include "d_patches/maximize.h"
 #include "dwm.h"
 
 #include <X11/X.h>
@@ -78,9 +79,9 @@ const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 const Layout layouts[]   = {
   /* symbol     arrange function */
-    {"[]=", tile   }, /* first entry is default */
-    {"><>", NULL   }, /* no layout function means floating behavior */
-    {"[M]", monocle},
+    {"TILED", tile   }, /* first entry is default */
+    {"FLOAT", NULL   }, /* no layout function means floating behavior */
+    {"[M]",   monocle},
 };
 
 /* commands */
@@ -91,53 +92,55 @@ const char *dmenucmd[] = {
 
 const Key keys[] = {
   /* modifier                     key        function        argument */
-    {ALTKEY,             XK_b,                     spawn,                    firefox           },
-    {ALTKEY,             XK_e,                     spawn,                    thunar            },
-    {ALTKEY,             XK_m,                     spawn,                    spotify           },
-    {ALTKEY,             XK_w,                     cycle_wallpaper_forward,  {0}               },
-    {ALTKEY | ShiftMask, XK_w,                     cycle_wallpaper_backward, {0}               },
+    {ALTKEY,               XK_b,                     spawn,                    firefox           },
+    {ALTKEY,               XK_e,                     spawn,                    thunar            },
+    {ALTKEY,               XK_m,                     spawn,                    spotify           },
+    {ALTKEY,               XK_w,                     cycle_wallpaper_forward,  {0}               },
+    {ALTKEY | ShiftMask,   XK_w,                     cycle_wallpaper_backward, {0}               },
 
-    {0,                  XK_Print,                 spawn,                    scrot             },
+    {0,                    XK_Print,                 spawn,                    scrot             },
 
-    {0,                  XF86XK_AudioMute,         spawn,                    mute_vol          },
-    {0,                  XF86XK_AudioRaiseVolume,  spawn,                    raise_vol         },
-    {ShiftMask,          XF86XK_AudioRaiseVolume,  spawn,                    max_vol           },
-    {0,                  XF86XK_AudioLowerVolume,  spawn,                    down_vol          },
-    {ShiftMask,          XF86XK_AudioLowerVolume,  spawn,                    zero_vol          },
+    {0,                    XF86XK_AudioMute,         spawn,                    mute_vol          },
+    {0,                    XF86XK_AudioRaiseVolume,  spawn,                    raise_vol         },
+    {ShiftMask,            XF86XK_AudioRaiseVolume,  spawn,                    max_vol           },
+    {0,                    XF86XK_AudioLowerVolume,  spawn,                    down_vol          },
+    {ShiftMask,            XF86XK_AudioLowerVolume,  spawn,                    zero_vol          },
 
-    {0,                  XF86XK_MonBrightnessUp,   spawn,                    bright            },
-    {0,                  XF86XK_MonBrightnessDown, spawn,                    dimmer            },
+    {0,                    XF86XK_MonBrightnessUp,   spawn,                    bright            },
+    {0,                    XF86XK_MonBrightnessDown, spawn,                    dimmer            },
 
-    {MODKEY,             XK_r,                     spawn,                    {.v = dmenucmd}   },
-    {MODKEY | ShiftMask, XK_Return,                spawn,                    termcmd           },
-    {MODKEY,             XK_b,                     togglebar,                {0}               },
-    {MODKEY,             XK_j,                     focusstackvis,            {.i = +1}         },
-    {MODKEY,             XK_k,                     focusstackvis,            {.i = -1}         },
-    {MODKEY | ShiftMask, XK_j,                     focusstackhid,            {.i = +1}         },
-    {MODKEY | ShiftMask, XK_k,                     focusstackhid,            {.i = -1}         },
-    {MODKEY,             XK_i,                     incnmaster,               {.i = +1}         },
-    {MODKEY,             XK_d,                     incnmaster,               {.i = -1}         },
-    {MODKEY,             XK_h,                     setmfact,                 {.f = -0.05}      },
-    {MODKEY,             XK_l,                     setmfact,                 {.f = +0.05}      },
-    {MODKEY,             XK_Return,                zoom,                     {0}               },
-    {MODKEY,             XK_Tab,                   view,                     {0}               },
-    {MODKEY | ShiftMask, XK_c,                     killclient,               {0}               },
-    {MODKEY,             XK_t,                     setlayout,                {.v = &layouts[0]}},
+    {MODKEY | ControlMask, XK_h | XK_m,              togglehorizontalmax,      {0}               },
+    {MODKEY | ControlMask, XK_v | XK_m,              toggleverticalmax,        {0}               },
+    {MODKEY | ControlMask, XK_m,                     togglemaximize,           {0}               },
 
-    {MODKEY,             XK_f,                     setlayout,                {.v = &layouts[1]}},
-
-    {MODKEY,             XK_m,                     setlayout,                {.v = &layouts[2]}},
-    {MODKEY,             XK_space,                 setlayout,                {0}               },
-    {MODKEY | ShiftMask, XK_space,                 togglefloating,           {0}               },
-    {MODKEY,             XK_0,                     view,                     {.ui = ~0}        },
-    {MODKEY | ShiftMask, XK_0,                     tag,                      {.ui = ~0}        },
-    {MODKEY,             XK_comma,                 focusmon,                 {.i = -1}         },
-    {MODKEY,             XK_period,                focusmon,                 {.i = +1}         },
-    {MODKEY | ShiftMask, XK_comma,                 tagmon,                   {.i = -1}         },
-    {MODKEY | ShiftMask, XK_period,                tagmon,                   {.i = +1}         },
-    {MODKEY,             XK_s,                     show,                     {0}               },
-    {MODKEY | ShiftMask, XK_s,                     showall,                  {0}               },
-    {MODKEY | ShiftMask, XK_h,                     hide,                     {0}               },
+    {MODKEY,               XK_r,                     spawn,                    {.v = dmenucmd}   },
+    {MODKEY | ShiftMask,   XK_Return,                spawn,                    termcmd           },
+    {MODKEY,               XK_b,                     togglebar,                {0}               },
+    {MODKEY,               XK_j,                     focusstackvis,            {.i = +1}         },
+    {MODKEY,               XK_k,                     focusstackvis,            {.i = -1}         },
+    {MODKEY | ShiftMask,   XK_j,                     focusstackhid,            {.i = +1}         },
+    {MODKEY | ShiftMask,   XK_k,                     focusstackhid,            {.i = -1}         },
+    {MODKEY,               XK_i,                     incnmaster,               {.i = +1}         },
+    {MODKEY,               XK_d,                     incnmaster,               {.i = -1}         },
+    {MODKEY,               XK_h,                     setmfact,                 {.f = -0.05}      },
+    {MODKEY,               XK_l,                     setmfact,                 {.f = +0.05}      },
+    {MODKEY,               XK_Return,                zoom,                     {0}               },
+    {MODKEY,               XK_Tab,                   view,                     {0}               },
+    {MODKEY | ShiftMask,   XK_c,                     killclient,               {0}               },
+    {MODKEY,               XK_t,                     setlayout,                {.v = &layouts[0]}},
+    {MODKEY,               XK_f,                     setlayout,                {.v = &layouts[1]}},
+    {MODKEY,               XK_m,                     setlayout,                {.v = &layouts[2]}},
+    {MODKEY,               XK_space,                 setlayout,                {0}               },
+    {MODKEY | ShiftMask,   XK_space,                 togglefloating,           {0}               },
+    {MODKEY,               XK_0,                     view,                     {.ui = ~0}        },
+    {MODKEY | ShiftMask,   XK_0,                     tag,                      {.ui = ~0}        },
+    {MODKEY,               XK_comma,                 focusmon,                 {.i = -1}         },
+    {MODKEY,               XK_period,                focusmon,                 {.i = +1}         },
+    {MODKEY | ShiftMask,   XK_comma,                 tagmon,                   {.i = -1}         },
+    {MODKEY | ShiftMask,   XK_period,                tagmon,                   {.i = +1}         },
+    {MODKEY,               XK_s,                     show,                     {0}               },
+    {MODKEY | ShiftMask,   XK_s,                     showall,                  {0}               },
+    {MODKEY | ShiftMask,   XK_h,                     hide,                     {0}               },
     TAGKEYS(XK_1, 0),
     TAGKEYS(XK_2, 1),
     TAGKEYS(XK_3, 2),
@@ -147,8 +150,8 @@ const Key keys[] = {
     TAGKEYS(XK_7, 6),
     TAGKEYS(XK_8, 7),
     TAGKEYS(XK_9, 8),
-    {MODKEY | ShiftMask, XK_q,                     quit,                     {0}               },
-    {MODKEY | ShiftMask, XK_r,                     quit,                     {1}               },
+    {MODKEY | ShiftMask,   XK_q,                     quit,                     {0}               },
+    {MODKEY | ShiftMask,   XK_r,                     quit,                     {1}               },
 };
 
 /* button definitions */

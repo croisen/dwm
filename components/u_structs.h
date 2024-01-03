@@ -29,7 +29,8 @@ struct Client {
     int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
     int bw, oldbw;
     unsigned int tags;
-    int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+    int ismax, wasfloating, isfixed, isfloating, isurgent, neverfocus, oldstate,
+        isfullscreen;
     Client *next;
     Client *snext;
     Monitor *mon;

@@ -1033,6 +1033,10 @@ void manage(Window w, XWindowAttributes *wa) {
                  EnterWindowMask | FocusChangeMask | PropertyChangeMask |
                      StructureNotifyMask);
     grabbuttons(c, 0);
+
+    c->wasfloating = 0;
+    c->ismax       = 0;
+
     if (!c->isfloating)
         c->isfloating = c->oldstate = trans != None || c->isfixed;
     if (c->isfloating)
