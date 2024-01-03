@@ -1,5 +1,5 @@
 #include "restart_sig.h"
-#include "../../dwm.h"
+#include "../dwm.h"
 
 void some_sighup(int unused) {
     (void)unused;

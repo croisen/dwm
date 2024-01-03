@@ -16,8 +16,11 @@ static const Arg max_vol = SHCMD(
 static const Arg zero_vol =
     SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && kill -USR1 $(pgrep slstatus)");
 
-static const Arg dimmer  = SHCMD("xbacklight - 5%");
-static const Arg bright  = SHCMD("xbacklight + 5%");
+static const Arg dimmer = SHCMD("xbacklight - 5%");
+static const Arg bright = SHCMD("xbacklight + 5%");
+
+static const Arg scrot =
+    SHCMD("scrot ~/Pictures/'Screenshot_%Y-%m-%d_%H_%M_%S.png'");
 
 static const Arg termcmd = SHCMD("kitty");
 static const Arg thunar  = SHCMD("thunar");

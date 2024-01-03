@@ -82,4 +82,9 @@ typedef struct {
     int monitor;
 } Rule;
 
+typedef struct {
+    Window win;
+    Client *icons;
+} Systray;
+
 #endif

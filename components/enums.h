@@ -11,6 +11,10 @@ enum {
     NetWMState,
     NetWMCheck,
     NetWMFullscreen,
+    NetSystemTray,
+    NetSystemTrayOP,
+    NetSystemTrayOrientation,
+    NetSystemTrayOrientationHorz,
     NetActiveWindow,
     NetWMWindowType,
     NetWMWindowTypeDialog,
@@ -35,5 +39,7 @@ enum {
     ClkRootWin,
     ClkLast
 }; /* clicks */
+
+enum { Manager, Xembed, XembedInfo, XLast };
 
 #endif

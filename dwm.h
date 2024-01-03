@@ -1,6 +1,7 @@
 #ifndef ___DWM_6_4_H___
 #define ___DWM_6_4_H___
 
+#include "components/drw.h"
 #include "components/u_structs.h"
 
 #include <X11/Xatom.h>
@@ -80,7 +81,7 @@ void restack(Monitor *m);
 void run(void);
 void runautostart(void);
 void scan(void);
-int sendevent(Client *c, Atom proto);
+// int sendevent(Client *c, Atom proto);
 void sendmon(Client *c, Monitor *m);
 void setclientstate(Client *c, long state);
 void setfocus(Client *c);

@@ -8,18 +8,18 @@ MAIN				= dwm.c
 COMP_FILE			= ${wildcard components/*.c}
 COMP_OBJS			= ${patsubst %.c,%.o,${COMP_FILE}}
 
-PATCH_FILE			= ${wildcard components/patch_comps/*.c}
+PATCH_FILE			= ${wildcard d_patches/*.c}
 PATCH_OBJS			= ${patsubst %.c,%.o,${PATCH_FILE}}
 
-all: ${COMP_FILE} ${PATCH_FILE} dwm
+C_FILES 			= ${COMP_FILE} ${PATCH_FILE}
+O_FILES 			= ${COMP_OBJS} ${PATCH_OBJS}
 
-${COMP_FILE}:
-	${CC} ${CFLAGS} -c $@
+all: ${C_FILES} dwm
 
-${PATCH_FILE}:
-	${CC} ${CFLAGS} -c $@
+${C_FILES}:
+	${CC} ${CFLAGS} -c $@ -o ${patsubst %.c,%.o,$@}
 
-dwm: ${COMP_OBJS} ${PATCH_OBJS}
+dwm: ${C_FILES}
 	${CC} ${CFLAGS} -o $@ $(MAIN) $? ${INCS} ${LDFLAGS}
 
 clean:
@@ -49,4 +49,4 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.PHONY: all clean dist install uninstall dwm ${COMP_FILE} ${PATCH_FILE}
+.PHONY: all clean dist install uninstall dwm ${C_FILES}

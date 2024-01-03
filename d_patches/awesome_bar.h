@@ -1,7 +1,7 @@
 #ifndef ___DWM_6_4_AWESOME_BAR___
 #define ___DWM_6_4_AWESOME_BAR___
 
-#include "../u_structs.h"
+#include "../components/u_structs.h"
 
 void focusstackvis(const Arg *arg);
 void focusstackhid(const Arg *arg);

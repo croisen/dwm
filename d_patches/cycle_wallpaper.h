@@ -1,7 +1,7 @@
 #ifndef ___DWM_6_4_CYCLE_WALLS___
 #define ___DWM_6_4_CYCLE_WALLS___
 
-#include "../u_structs.h"
+#include "../components/u_structs.h"
 
 extern int wallpaper_index;
 

@@ -1,7 +1,7 @@
 #include "cycle_wallpaper.h"
-#include "../../dwm.h"
-#include "../../wallpapers.h"
-#include "../macros.h"
+#include "../components/macros.h"
+#include "../dwm.h"
+#include "../wallpapers.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -11,8 +11,9 @@ int wallpaper_index = 0;
 
 void set_wallpaper() {
     const char *wall = wallpapers[wallpaper_index];
-    char *cmd = calloc(sizeof(main_cmd) + strlen(wall) + 1, sizeof(char));
-    strcat(cmd, main_cmd);
+    char *cmd = malloc((sizeof(main_cmd) + strlen(wall) + 1) * sizeof(char));
+
+    strcpy(cmd, main_cmd);
     strcat(cmd, wall);
 
     Arg arg = SHCMD(cmd);
