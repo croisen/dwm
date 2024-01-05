@@ -16,6 +16,7 @@ enum {
     NetSystemTrayOrientation,
     NetSystemTrayOrientationHorz,
     NetActiveWindow,
+    NetWMWindowsOpacity,
     NetWMWindowType,
     NetWMWindowTypeDialog,
     NetClientList,

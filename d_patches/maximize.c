@@ -36,8 +36,9 @@ void maximize(int x, int y, int w, int h) {
         selmon->sel->ismax = False;
     }
     drawbar(selmon);
-    while (XCheckMaskEvent(dpy, EnterWindowMask, &ev))
-        ;
+
+    while (XCheckMaskEvent(dpy, EnterWindowMask, &ev)) {
+    }
 }
 
 void togglemaximize(const Arg *arg) {

@@ -6,6 +6,7 @@
 #include "components/macros.h"
 #include "components/u_structs.h"
 #include "d_patches/awesome_bar.h"
+#include "d_patches/client_opacity.h"
 #include "d_patches/cycle_wallpaper.h"
 #include "d_patches/maximize.h"
 #include "dwm.h"
@@ -17,6 +18,11 @@
 const unsigned int borderpx       = 5;  /* border pixel of windows */
 const unsigned int gappx          = 10; /* window gaps */
 const unsigned int snap           = 32; /* snap pixel */
+
+/* Window opacity when it's focused (0 <= opacity <= 1) */
+const double activeopacity        = 0.80f;
+/* Window opacity when it's inactive (0 <= opacity <= 1) */
+const double inactiveopacity      = 1.00f;
 
 /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 const unsigned int systraypinning = 0;
@@ -55,20 +61,23 @@ const char *colors[][3] = {
 };
 
 /* tagging */
-const char *tags[] = {"", "󰙯", "", "4", "5", "6", "", "", ""};
+const char *tags[] = {"", "󰙯", "", "󰏆", "5",
+                      "6",   "",  "", ""};
 
 const Rule rules[] = {
   /* xprop(1):
   *	WM_CLASS(STRING) = instance, class
   *	WM_NAME(STRING) = title
   */
-  /* class      instance    title       tags mask     isfloating   monitor */
-    {"kitty",   NULL, NULL, 1 << 0, 0, -1},
-    {"discord", NULL, NULL, 1 << 1, 0, -1},
-    {"Thunar",  NULL, NULL, 1 << 2, 0, -1},
-    {"steam",   NULL, NULL, 1 << 6, 0, -1},
-    {"Spotify", NULL, NULL, 1 << 7, 0, -1},
-    {"firefox", NULL, NULL, 1 << 8, 0, -1},
+
+  /* class  instance  title  tags  mask  isfloating  focusopacity
+  unfocusedopacity  monitor */
+    {"kitty",   NULL, NULL, 1 << 0, 0, activeopacity,   activeopacity,   -1},
+    {"discord", NULL, NULL, 1 << 1, 0, inactiveopacity, inactiveopacity, -1},
+    {"Thunar",  NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
+    {"steam",   NULL, NULL, 1 << 6, 0, inactiveopacity, inactiveopacity, -1},
+    {"Spotify", NULL, NULL, 1 << 7, 0, activeopacity,   inactiveopacity, -1},
+    {"firefox", NULL, NULL, 1 << 8, 0, inactiveopacity, inactiveopacity, -1},
 };
 
 /* layout(s) */
@@ -113,13 +122,21 @@ const Key keys[] = {
     {MODKEY | ControlMask, XK_v | XK_m,              toggleverticalmax,        {0}               },
     {MODKEY | ControlMask, XK_m,                     togglemaximize,           {0}               },
 
+    {MODKEY | ControlMask, XK_o,                     changefocusopacity,       {.f = +0.025}     },
+    {MODKEY | ShiftMask,   XK_o,                     changefocusopacity,       {.f = -0.025}     },
+    {MODKEY | ControlMask, XK_u | XK_o,              changeunfocusopacity,     {.f = +0.025}     },
+    {MODKEY | ShiftMask,   XK_u | XK_o,              changeunfocusopacity,     {.f = -0.025}     },
+
     {MODKEY,               XK_r,                     spawn,                    {.v = dmenucmd}   },
     {MODKEY | ShiftMask,   XK_Return,                spawn,                    termcmd           },
     {MODKEY,               XK_b,                     togglebar,                {0}               },
-    {MODKEY,               XK_j,                     focusstackvis,            {.i = +1}         },
-    {MODKEY,               XK_k,                     focusstackvis,            {.i = -1}         },
-    {MODKEY | ShiftMask,   XK_j,                     focusstackhid,            {.i = +1}         },
-    {MODKEY | ShiftMask,   XK_k,                     focusstackhid,            {.i = -1}         },
+
+ /* People might get confused by this decision */
+    {MODKEY,               XK_j,                     focusstackvis,            {.i = -1}         },
+    {MODKEY,               XK_k,                     focusstackvis,            {.i = +1}         },
+    {MODKEY | ShiftMask,   XK_j,                     focusstackhid,            {.i = -1}         },
+    {MODKEY | ShiftMask,   XK_k,                     focusstackhid,            {.i = +1}         },
+
     {MODKEY,               XK_i,                     incnmaster,               {.i = +1}         },
     {MODKEY,               XK_d,                     incnmaster,               {.i = -1}         },
     {MODKEY,               XK_h,                     setmfact,                 {.f = -0.05}      },

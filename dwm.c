@@ -107,11 +107,13 @@ void applyrules(Client *c) {
     unsigned int i;
     const Rule *r;
     Monitor *m;
-    XClassHint ch = {NULL, NULL};
+    XClassHint ch     = {NULL, NULL};
 
     /* rule matching */
-    c->isfloating = 0;
-    c->tags       = 0;
+    c->isfloating     = 0;
+    c->tags           = 0;
+    c->opacity        = activeopacity;
+    c->unfocusopacity = inactiveopacity;
     XGetClassHint(dpy, c->win, &ch);
     class    = ch.res_class ? ch.res_class : broken;
     instance = ch.res_name ? ch.res_name : broken;
@@ -121,8 +123,10 @@ void applyrules(Client *c) {
         if ((!r->title || strstr(c->name, r->title)) &&
             (!r->class || strstr(class, r->class)) &&
             (!r->instance || strstr(instance, r->instance))) {
-            c->isfloating  = r->isfloating;
-            c->tags       |= r->tags;
+            c->isfloating      = r->isfloating;
+            c->tags           |= r->tags;
+            c->opacity         = r->opacity;
+            c->unfocusopacity  = r->unfocusopacity;
             for (m = mons; m && m->num != r->monitor; m = m->next)
                 ;
             if (m)
@@ -743,6 +747,8 @@ void focus(Client *c) {
         grabbuttons(c, 1);
         XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
         setfocus(c);
+        c->opacity = MIN(1.0, MAX(0, c->opacity));
+        opacity(c, c->opacity);
     } else {
         XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
         XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
@@ -1013,6 +1019,8 @@ void manage(Window w, XWindowAttributes *wa) {
         c->mon = selmon;
         applyrules(c);
     }
+
+    opacity(c, c->opacity);
 
     if (c->x + WIDTH(c) > c->mon->wx + c->mon->ww)
         c->x = c->mon->wx + c->mon->ww - WIDTH(c);
@@ -1719,16 +1727,19 @@ void setup(void) {
     netatom[NetWMWindowTypeDialog] =
         XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
     netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
-    xatom[Manager]         = XInternAtom(dpy, "MANAGER", False);
-    xatom[Xembed]          = XInternAtom(dpy, "_XEMBED", False);
-    xatom[XembedInfo]      = XInternAtom(dpy, "_XEMBED_INFO", False);
+    netatom[NetWMWindowsOpacity] =
+        XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False);
+
+    xatom[Manager]    = XInternAtom(dpy, "MANAGER", False);
+    xatom[Xembed]     = XInternAtom(dpy, "_XEMBED", False);
+    xatom[XembedInfo] = XInternAtom(dpy, "_XEMBED_INFO", False);
 
     /* init cursors */
-    cursor[CurNormal]      = drw_cur_create(drw, XC_left_ptr);
-    cursor[CurResize]      = drw_cur_create(drw, XC_sizing);
-    cursor[CurMove]        = drw_cur_create(drw, XC_fleur);
+    cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
+    cursor[CurResize] = drw_cur_create(drw, XC_sizing);
+    cursor[CurMove]   = drw_cur_create(drw, XC_fleur);
     /* init appearance */
-    scheme                 = ecalloc(LENGTH(colors), sizeof(Clr *));
+    scheme            = ecalloc(LENGTH(colors), sizeof(Clr *));
     for (i = 0; i < LENGTH(colors); i++)
         scheme[i] = drw_scm_create(drw, colors[i], 3);
 
@@ -1960,6 +1971,8 @@ void unfocus(Client *c, int setfocus) {
     if (!c)
         return;
     grabbuttons(c, 0);
+    c->unfocusopacity = MIN(1.0, MAX(0, c->unfocusopacity));
+    opacity(c, c->unfocusopacity);
     XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
     if (setfocus) {
         XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
