@@ -2,7 +2,7 @@ VERSION						= 6.4
 PREFIX						= /usr/local
 MANPREFIX					= ${PREFIX}/share/man
 
-CC							= clang
+CC							= cc
 
 FREETYPEINC					= /usr/include/freetype2
 FREETYPELIB					= -lfontconfig -lXft

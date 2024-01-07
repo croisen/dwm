@@ -9,6 +9,7 @@
 #include "d_patches/client_opacity.h"
 #include "d_patches/cycle_wallpaper.h"
 #include "d_patches/maximize.h"
+#include "d_patches/rotate_stack.h"
 #include "dwm.h"
 
 #include <X11/X.h>
@@ -20,7 +21,7 @@ const unsigned int gappx          = 10; /* window gaps */
 const unsigned int snap           = 32; /* snap pixel */
 
 /* Window opacity when it's focused (0 <= opacity <= 1) */
-const double activeopacity        = 0.80f;
+const double activeopacity        = 0.69f;
 /* Window opacity when it's inactive (0 <= opacity <= 1) */
 const double inactiveopacity      = 1.00f;
 
@@ -39,30 +40,44 @@ const int showsystray             = 1; /* 0 means no systray */
 const int showbar                 = 1; /* 0 means no bar */
 const int topbar                  = 1; /* 0 means bottom bar */
 
-const char dmenufont[]            = "monospace:size=7";
-const char *fonts[]               = {
-    "monospace:size=7",
-    "MesloLGS Nerd Font:size=7",
-    "Fira Code:style=Medium,Regular:size=7",
-};
+// const char dmenufont[]            = "monospace:size=7";
+// const char *fonts[]               = {
+//"monospace:size=7",
+//"MesloLGS Nerd Font:size=7",
+//"Fira Code:style=Medium,Regular:size=7",
+//};
 
-const char col_gray1[]  = "#222222"; /* bg col */
-const char col_gray2[]  = "#444444"; /* border col */
-const char col_gray3[]  = "#bbbbbb"; /* font col */
-const char col_gray4[]  = "#eeeeee"; /* tag & win title font col */
-const char col_cyan[]   = "#005577"; /* tag & win title bg col */
+// const char col_gray1[]  = "#222222"; [> bg col <]
+// const char col_gray2[]  = "#444444"; [> border col <]
+// const char col_gray3[]  = "#bbbbbb"; [> font col <]
+// const char col_gray4[]  = "#eeeeee"; [> tag & win title font col <]
+// const char col_cyan[]   = "#005577"; [> tag & win title bg col <]
+
+const char col_gray1[]            = "#d3d7cf";
+const char col_gray2[]            = "#d3d7cf";
+const char col_gray3[]            = "#000000";
+const char col_gray4[]            = "#ffffff";
+const char col_cyan[]             = "#0000aa";
+
+const char *fonts[]               = {
+    "Fixedsys Excelsior:size=13:antialias=true:autohint=false",
+};
+const char dmenufont[] =
+    "Fixedsys Excelsior:size=13:antialias=true:autohint=false";
 
 const char *colors[][3] = {
   /*               fg         bg         border   */
-    [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
-    [SchemeSel]  = {col_gray4, col_cyan,  col_cyan },
+  //[SchemeNorm] = {col_gray3, col_gray1, col_gray2},
+  //[SchemeSel]  = {col_gray4, col_cyan,  col_cyan },
+    [SchemeNorm] = {col_gray3, col_gray1, col_cyan },
+    [SchemeSel]  = {col_gray4, col_cyan,  col_gray2},
     [SchemeHov]  = {col_gray4, col_cyan,  col_cyan },
     [SchemeHid]  = {col_cyan,  col_gray1, col_cyan },
 };
 
 /* tagging */
-const char *tags[] = {"", "󰙯", "", "󰏆", "5",
-                      "6",   "",  "", ""};
+const char *tags[] = {"", "󰙯", "", "󰖴", "5",
+                      "", "",  "", ""};
 
 const Rule rules[] = {
   /* xprop(1):
@@ -74,7 +89,10 @@ const Rule rules[] = {
   unfocusedopacity  monitor */
     {"kitty",   NULL, NULL, 1 << 0, 0, activeopacity,   activeopacity,   -1},
     {"discord", NULL, NULL, 1 << 1, 0, inactiveopacity, inactiveopacity, -1},
+    {"feh",     NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
+    {"Eog",     NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
     {"Thunar",  NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
+    {"qprompt", NULL, NULL, 1 << 5, 0, inactiveopacity, inactiveopacity, -1},
     {"steam",   NULL, NULL, 1 << 6, 0, inactiveopacity, inactiveopacity, -1},
     {"Spotify", NULL, NULL, 1 << 7, 0, activeopacity,   inactiveopacity, -1},
     {"firefox", NULL, NULL, 1 << 8, 0, inactiveopacity, inactiveopacity, -1},
@@ -132,10 +150,10 @@ const Key keys[] = {
     {MODKEY,               XK_b,                     togglebar,                {0}               },
 
  /* People might get confused by this decision */
-    {MODKEY,               XK_j,                     focusstackvis,            {.i = -1}         },
-    {MODKEY,               XK_k,                     focusstackvis,            {.i = +1}         },
-    {MODKEY | ShiftMask,   XK_j,                     focusstackhid,            {.i = -1}         },
-    {MODKEY | ShiftMask,   XK_k,                     focusstackhid,            {.i = +1}         },
+    {MODKEY,               XK_j,                     focusstackhid,            {.i = -1}         },
+    {MODKEY,               XK_k,                     focusstackhid,            {.i = +1}         },
+    {MODKEY | ShiftMask,   XK_j,                     rotatestack,              {.i = -1}         },
+    {MODKEY | ShiftMask,   XK_k,                     rotatestack,              {.i = +1}         },
 
     {MODKEY,               XK_i,                     incnmaster,               {.i = +1}         },
     {MODKEY,               XK_d,                     incnmaster,               {.i = -1}         },

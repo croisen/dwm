@@ -22,6 +22,7 @@
  */
 
 #include "dwm.h"
+
 #include "components/drw.h"
 #include "components/enums.h"
 #include "components/macros.h"
