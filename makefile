@@ -32,7 +32,7 @@ clean:
 dist: clean
 	mkdir -p dwm-${VERSION}
 	cp -R LICENSE makefile README.md config.h dwm.1 dwm.c dwm.h transient.c\
-		wallpapers.h components/ dwm-${VERSION}
+		wallpapers.h dwm.desktop components/ dwm-${VERSION}
 	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
 	gzip dwm-${VERSION}.tar
 	rm -rf dwm-${VERSION}
@@ -44,6 +44,7 @@ install: all
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	cp -f dwm.desktop /usr/share/xsessions
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
