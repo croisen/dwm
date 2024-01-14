@@ -1,26 +1,30 @@
-#include "client_opacity.h"
+#ifndef PATCH_CLIENT_OPACITY_H
+#define PATCH_CLIENT_OPACITY_H
 
-#include "../components/enums.h"
-#include "../components/u_structs.h"
+#include "main_un_structs.h"
 
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
+extern void changefocusopacity(Arg* arg);
+extern void changeunfocusopacity(Arg* arg);
+extern void opacity(Client* c, double opacity);
 
-extern Atom netatom[NetLast];
-extern Display *dpy;
-extern Monitor *selmon;
+#ifdef PATCH_CLIENT_OPACITY_IMPL_H
 
-void opacity(Client *c, double opacity) {
-    if (opacity > 0.0f && opacity < 1.0f) {
-        unsigned long real_opacity[] = {opacity * 0xffffffff};
+void opacity(Client* c, double opacity)
+{
+    if (opacity > 0.0f && opacity < 1.0f)
+    {
+        unsigned long real_opacity[] = { opacity * 0xffffffff };
         XChangeProperty(dpy, c->win, netatom[NetWMWindowsOpacity], XA_CARDINAL,
-                        32, PropModeReplace, (unsigned char *)real_opacity, 1);
-    } else {
+                        32, PropModeReplace, (unsigned char*)real_opacity, 1);
+    }
+    else
+    {
         XDeleteProperty(dpy, c->win, netatom[NetWMWindowsOpacity]);
     }
 }
 
-void changefocusopacity(const Arg *arg) {
+void changefocusopacity(Arg* arg)
+{
     if (!selmon->sel)
         return;
     selmon->sel->opacity += arg->f;
@@ -33,7 +37,8 @@ void changefocusopacity(const Arg *arg) {
     opacity(selmon->sel, selmon->sel->opacity);
 }
 
-void changeunfocusopacity(const Arg *arg) {
+void changeunfocusopacity(Arg* arg)
+{
     if (!selmon->sel)
         return;
     selmon->sel->unfocusopacity += arg->f;
@@ -45,3 +50,7 @@ void changeunfocusopacity(const Arg *arg) {
 
     opacity(selmon->sel, selmon->sel->unfocusopacity);
 }
+
+#endif /*PATCH_CLIENT_OPACITY_IMPL_H*/
+
+#endif /*PATCH_CLIENT_OPACITY_H*/

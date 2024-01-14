@@ -5,21 +5,9 @@ include config.mk
 
 MAIN				= dwm.c
 
-COMP_FILE			= ${wildcard components/*.c}
-COMP_OBJS			= ${patsubst %.c,%.o,${COMP_FILE}}
+all: dwm
 
-PATCH_FILE			= ${wildcard d_patches/*.c}
-PATCH_OBJS			= ${patsubst %.c,%.o,${PATCH_FILE}}
-
-C_FILES 			= ${COMP_FILE} ${PATCH_FILE}
-O_FILES 			= ${COMP_OBJS} ${PATCH_OBJS}
-
-all: ${C_FILES} dwm
-
-${C_FILES}:
-	${CC} ${CFLAGS} -c $@ -o ${patsubst %.c,%.o,$@}
-
-dwm: ${C_FILES}
+dwm:
 	${CC} ${CFLAGS} -o $@ $(MAIN) $? ${INCS} ${LDFLAGS}
 
 clean:
@@ -50,4 +38,4 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.PHONY: all clean dist install uninstall dwm ${C_FILES}
+.PHONY: all clean dist install uninstall dwm

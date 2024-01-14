@@ -4,6 +4,7 @@
 // Uses feh to set the wallpapers
 
 static const char *wallpapers[] = {
+    "~/git/croisen/wallpapers/desktop/aqw-chronos.png",
     "~/git/croisen/wallpapers/desktop/0000080.png",
     "~/git/croisen/wallpapers/desktop/0000061.png",
     "~/git/croisen/wallpapers/desktop/0000236.png",

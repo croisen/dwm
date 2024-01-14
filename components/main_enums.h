@@ -1,11 +1,24 @@
-#ifndef ___DWM_6_4_ENUMS___
-#define ___DWM_6_4_ENUMS___
+#ifndef DWM_ENUMS_H
+#define DWM_ENUMS_H
 
-enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+enum
+{
+    CurNormal,
+    CurResize,
+    CurMove,
+    CurLast
+}; /* cursor */
 
-enum { SchemeNorm, SchemeSel, SchemeHov, SchemeHid }; /* color schemes */
+enum
+{
+    SchemeNorm,
+    SchemeSel,
+    SchemeHov,
+    SchemeHid
+}; /* color schemes */
 
-enum {
+enum
+{
     NetSupported,
     NetWMName,
     NetWMState,
@@ -23,7 +36,8 @@ enum {
     NetLast
 }; /* EWMH atoms */
 
-enum {
+enum
+{
     WMProtocols,
     WMDelete,
     WMState,
@@ -31,7 +45,8 @@ enum {
     WMLast
 }; /* default atoms */
 
-enum {
+enum
+{
     ClkTagBar,
     ClkLtSymbol,
     ClkStatusText,
@@ -41,6 +56,12 @@ enum {
     ClkLast
 }; /* clicks */
 
-enum { Manager, Xembed, XembedInfo, XLast };
+enum
+{
+    Manager,
+    Xembed,
+    XembedInfo,
+    XLast
+};
 
-#endif
+#endif /*DWM_ENUMS_H*/

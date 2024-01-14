@@ -1,27 +1,30 @@
-#ifndef ___DWM_6_4_U_STRUCTS___
-#define ___DWM_6_4_U_STRUCTS___
+#ifndef DWM_UNION_N_STRUCTS_H
+#define DWM_UNION_N_STRUCTS_H
 
 #include <X11/X.h>
 
-typedef union {
+typedef union
+{
     int i;
     unsigned int ui;
     float f;
-    const void *v;
+    const void* v;
 } Arg;
 
-typedef struct {
+typedef struct
+{
     unsigned int click;
     unsigned int mask;
     unsigned int button;
-    void (*func)(const Arg *arg);
-    const Arg arg;
+    void (*func)(Arg* arg);
+    Arg arg;
 } Button;
 
 typedef struct Monitor Monitor;
 typedef struct Client Client;
 
-struct Client {
+struct Client
+{
     char name[256];
     float mina, maxa;
     int x, y, w, h;
@@ -29,28 +32,30 @@ struct Client {
     int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
     int bw, oldbw;
     unsigned int tags;
-    int ismax, wasfloating, isfixed, isfloating, isurgent, neverfocus, oldstate,
-        isfullscreen;
+    int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
     double opacity, unfocusopacity;
-    Client *next;
-    Client *snext;
-    Monitor *mon;
+    Client* next;
+    Client* snext;
+    Monitor* mon;
     Window win;
 };
 
-typedef struct {
+typedef struct
+{
     unsigned int mod;
     KeySym keysym;
-    void (*func)(const Arg *);
-    const Arg arg;
+    void (*func)(Arg*);
+    Arg arg;
 } Key;
 
-typedef struct {
-    const char *symbol;
-    void (*arrange)(Monitor *);
+typedef struct
+{
+    const char* symbol;
+    void (*arrange)(Monitor*);
 } Layout;
 
-struct Monitor {
+struct Monitor
+{
     char ltsymbol[16];
     float mfact;
     int nmaster;
@@ -66,28 +71,30 @@ struct Monitor {
     int showbar;
     int topbar;
     int hidsel;
-    Client *clients;
-    Client *sel;
-    Client *hov;
-    Client *stack;
-    Monitor *next;
+    Client* clients;
+    Client* sel;
+    Client* hov;
+    Client* stack;
+    Monitor* next;
     Window barwin;
-    const Layout *lt[2];
+    const Layout* lt[2];
 };
 
-typedef struct {
-    const char *class;
-    const char *instance;
-    const char *title;
+typedef struct
+{
+    const char* class_name;
+    const char* instance;
+    const char* title;
     unsigned int tags;
     int isfloating;
     double opacity, unfocusopacity;
     int monitor;
 } Rule;
 
-typedef struct {
+typedef struct
+{
     Window win;
-    Client *icons;
+    Client* icons;
 } Systray;
 
-#endif
+#endif /*DWM_UNION_N_STRUCTS_H*/
