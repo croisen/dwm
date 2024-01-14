@@ -22,6 +22,8 @@ extern void updatesystrayiconstate(Client* i, XPropertyEvent* ev);
 
 extern Client* wintosystrayicon(Window w);
 
+#endif /*PATCH_SYSTRAY_H*/
+
 #ifdef PATCH_SYSTRAY_IMPL_H
 
 unsigned int getsystraywidth()
@@ -237,5 +239,3 @@ Monitor* systraytomon(Monitor* m)
 }
 
 #endif /*PATCH_SYSTRAY_IMPL_H*/
-
-#endif /*PATCH_SYSTRAY_H*/

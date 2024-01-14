@@ -7,6 +7,8 @@ extern void enqueue(Client* c);
 extern void enqueuestack(Client* c);
 extern void rotatestack(Arg* arg);
 
+#endif /*PATCH_ROTATE_STACK_H*/
+
 #ifdef PATCH_ROTATE_STACK_IMPL_H
 
 void enqueue(Client* c)
@@ -73,5 +75,3 @@ void rotatestack(Arg* arg)
 }
 
 #endif /*PATCH_ROTATE_STACK_IMPL_H*/
-
-#endif /*PATCH_ROTATE_STACK_H*/

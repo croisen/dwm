@@ -10,6 +10,8 @@
 extern void die(const char* fmt, ...);
 extern void* ecalloc(size_t nmemb, size_t size);
 
+#endif /*DWM_UTIL_H*/
+
 #ifdef DWM_UTIL_IMPL_H
 
 #include <stdarg.h>
@@ -47,5 +49,3 @@ void* ecalloc(size_t nmemb, size_t size)
 }
 
 #endif /*DWM_UTIL_IMPL_H*/
-
-#endif /*DWM_UTIL_H*/

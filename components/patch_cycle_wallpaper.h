@@ -1,11 +1,15 @@
 #ifndef CROI_PATCH_CYCLE_WALLPAPER_H
 #define CROI_PATCH_CYCLE_WALLPAPER_H
 
+#include "../wallpapers.h"
+
 #include "main_un_structs.h"
 
 extern void set_wallpaper();
 extern void cycle_wallpaper_forward(Arg* arg);
 extern void cycle_wallpaper_backward(Arg* arg);
+
+#endif /*CROI_PATCH_CYCLE_WALLPAPER_H*/
 
 #ifdef CROI_PATCH_CYCLE_WALLPAPER_IMPL_H
 
@@ -44,5 +48,3 @@ void cycle_wallpaper_backward(Arg* arg)
 }
 
 #endif /*CROI_PATCH_CYCLE_WALLPAPER_IMPL_H*/
-
-#endif /*CROI_PATCH_CYCLE_WALLPAPER_H*/

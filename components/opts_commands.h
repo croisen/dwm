@@ -16,6 +16,8 @@ extern const Arg thunar;
 extern const Arg spotify;
 extern const Arg firefox;
 
+#endif /*CROI_DWM_CMDS_H*/
+
 #ifdef CROI_DWM_CMDS_IMPL_H
 
 const Arg down_vol = SHCMD(
@@ -40,5 +42,3 @@ const Arg spotify = SHCMD("LD_PRELOAD=/usr/lib/spotify-adblock.so spotify");
 const Arg firefox = SHCMD("firefox");
 
 #endif /*CROI_DWM_CMDS_IMPL_H*/
-
-#endif /*CROI_DWM_CMDS_H*/

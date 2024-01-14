@@ -21,10 +21,14 @@
  * To understand everything else, start reading main().
  */
 
-// Config first
-#include "config.h"
+#define DWM_CONFIG_IMPL_H
 
-// Main Components and Patches second
+#include "dwm.h"
+#include "config.h"
+#include "dwm_impl.h"
+
+#include <X11/keysymdef.h>
+
 #define DWM_DRW_IMPL_H
 #define DWM_UTIL_IMPL_H
 
@@ -34,7 +38,6 @@
 #define PATCH_ROTATE_STACK_IMPL_H
 #define PATCH_SYSTRAY_IMPL_H
 
-#define CROI_DWM_CMDS_IMPL_H
 #define CROI_PATCH_CYCLE_WALLPAPER_IMPL_H
 
 #include "components/main_drw.h"
@@ -43,19 +46,12 @@
 #include "components/main_un_structs.h"
 #include "components/main_util.h"
 
-#include "components/opts_commands.h"
-
 #include "components/patch_awesome_bar.h"
 #include "components/patch_client_opacity.h"
 #include "components/patch_cycle_wallpaper.h"
 #include "components/patch_restart_sig.h"
 #include "components/patch_rotate_stack.h"
 #include "components/patch_systray.h"
-
-// And the DWM function implementaations last
-#define DWM_IMPL_H
-
-#include "dwm.h"
 
 #include <X11/Xatom.h>
 #include <X11/Xft/Xft.h>

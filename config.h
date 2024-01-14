@@ -3,9 +3,12 @@
 
 #include "dwm.h"
 
+#define CROI_DWM_CMDS_IMPL_H
+
 #include "components/main_enums.h"
 #include "components/main_macros.h"
 #include "components/main_un_structs.h"
+#include "components/main_util.h"
 
 #include "components/patch_awesome_bar.h"
 #include "components/patch_client_opacity.h"
@@ -85,6 +88,10 @@ const char* colors[][3] = {
 const char* tags[]
     = { "", "󰙯", "", "󰖴", "5", "", "", "", "" };
 
+#endif /*DWM_CONFIG_H*/
+
+#ifdef DWM_CONFIG_IMPL_H
+
 const Rule rules[] = {
   /* xprop(1):
   *	WM_CLASS(STRING) = instance, class
@@ -123,7 +130,7 @@ const char* dmenucmd[]
     = { "dmenu_run", "-m",  dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf",
         col_gray3,   "-sb", col_cyan, "-sf", col_gray4, NULL };
 
-const Key keys[] = {
+Key keys[] = {
   /* modifier                     key        function        argument */
     {ALTKEY,                XK_b,                     spawn,                    firefox             },
     { ALTKEY,               XK_e,                     spawn,                    thunar              },
@@ -196,7 +203,7 @@ const Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
-const Button buttons[] = {
+Button buttons[] = {
   /* click       event mask  button  function            argument */
     {ClkLtSymbol,    0,      Button1, setlayout,      { 0 }               },
     { ClkLtSymbol,   0,      Button3, setlayout,      { .v = &layouts[2] }},
@@ -214,4 +221,4 @@ const Button buttons[] = {
     { ClkTagBar,     MODKEY, Button3, toggletag,      { 0 }               },
 };
 
-#endif /*DWM_CONFIG_H*/
+#endif /*DWM_CONFIG_IMPL_H*/

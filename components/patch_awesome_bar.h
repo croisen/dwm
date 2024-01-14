@@ -13,6 +13,8 @@ extern void showall(Arg* arg);
 extern void showhide(Client* c);
 extern void showwin(Client* c);
 
+#endif /*PATCH_AWESOME_BAR_H*/
+
 #ifdef PATCH_AWESOME_BAR_IMPL_H
 
 void focusstackvis(Arg* arg)
@@ -83,5 +85,3 @@ void showhide(Client* c)
 }
 
 #endif /*PATCH_AWESOME_BAR_IMPL_H*/
-
-#endif /*PATCH_AWESOME_BAR_H*/

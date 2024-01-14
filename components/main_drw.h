@@ -75,6 +75,8 @@ extern int drw_text(Drw* drw, int x, int y, unsigned int w, unsigned int h,
 extern void drw_map(Drw* drw, Window win, int x, int y, unsigned int w,
                     unsigned int h);
 
+#endif /*DWM_DRW_H*/
+
 #ifdef DWM_DRW_IMPL_H
 
 #include <stdio.h>
@@ -568,5 +570,3 @@ void drw_cur_free(Drw* drw, Cur* cursor)
 }
 
 #endif /*DRW_IMPL_H*/
-
-#endif /*DWM_DRW_H*/

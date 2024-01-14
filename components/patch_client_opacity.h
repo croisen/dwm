@@ -7,6 +7,8 @@ extern void changefocusopacity(Arg* arg);
 extern void changeunfocusopacity(Arg* arg);
 extern void opacity(Client* c, double opacity);
 
+#endif /*PATCH_CLIENT_OPACITY_H*/
+
 #ifdef PATCH_CLIENT_OPACITY_IMPL_H
 
 void opacity(Client* c, double opacity)
@@ -52,5 +54,3 @@ void changeunfocusopacity(Arg* arg)
 }
 
 #endif /*PATCH_CLIENT_OPACITY_IMPL_H*/
-
-#endif /*PATCH_CLIENT_OPACITY_H*/
