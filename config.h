@@ -90,7 +90,7 @@ const char* tags[]
 
 #endif /*DWM_CONFIG_H*/
 
-#ifdef DWM_CONFIG_IMPL_H
+// #ifdef DWM_CONFIG_IMPL_H
 
 const Rule rules[] = {
   /* xprop(1):
@@ -221,4 +221,4 @@ Button buttons[] = {
     { ClkTagBar,     MODKEY, Button3, toggletag,      { 0 }               },
 };
 
-#endif /*DWM_CONFIG_IMPL_H*/
+// #endif [>DWM_CONFIG_IMPL_H<]

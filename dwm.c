@@ -21,13 +21,10 @@
  * To understand everything else, start reading main().
  */
 
-#define DWM_CONFIG_IMPL_H
-
-#include "dwm.h"
 #include "config.h"
-#include "dwm_impl.h"
 
-#include <X11/keysymdef.h>
+#define DWM_IMPL_H
+#include "dwm.h"
 
 #define DWM_DRW_IMPL_H
 #define DWM_UTIL_IMPL_H
