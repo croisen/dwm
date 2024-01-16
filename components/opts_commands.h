@@ -20,16 +20,16 @@ extern const Arg firefox;
 
 #ifdef CROI_DWM_CMDS_IMPL_H
 
-const Arg down_vol = SHCMD(
-    "wpctl set-volume @DEFAULT_SINK@ 2%- && kill -USR1 $(pgrep slstatus)");
-const Arg raise_vol = SHCMD(
-    "wpctl set-volume @DEFAULT_SINK@ 2%+ && kill -USR1 $(pgrep slstatus)");
-const Arg mute_vol = SHCMD(
-    "wpctl set-mute @DEFAULT_SINK@ toggle && kill -USR1 $(pgrep slstatus)");
-const Arg max_vol = SHCMD(
-    "wpctl set-volume @DEFAULT_SINK@ 100% && kill -USR1 $(pgrep slstatus)");
-const Arg zero_vol = SHCMD(
-    "wpctl set-volume @DEFAULT_SINK@ 0% && kill -USR1 $(pgrep slstatus)");
+const Arg down_vol
+    = SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%- && pkill -RTMIN+7 dwmblocks");
+const Arg raise_vol
+    = SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%+ && pkill -RTMIN+7 dwmblocks");
+const Arg mute_vol
+    = SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+7 dwmblocks");
+const Arg max_vol
+    = SHCMD("wpctl set-volume @DEFAULT_SINK@ 100% && pkill -RTMIN+7 dwmblocks");
+const Arg zero_vol
+    = SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && pkill -RTMIN+7 dwmblocks");
 
 const Arg dimmer = SHCMD("xbacklight - 5%");
 const Arg bright = SHCMD("xbacklight + 5%");

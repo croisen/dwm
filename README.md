@@ -5,6 +5,7 @@ My own configuration of dwm, it's a mess and that's my fault
 ## External Packages I Use
 
 -   dmenu
+-   dwmblocks
 -   feh
 -   firefox
 -   spotify
@@ -54,7 +55,7 @@ like this in your .xinitrc:
 ```bash
 while xsetroot -name "`date` `uptime | sed 's/.*,//'`"
 do
-sleep 1
+    sleep 1
 done &
 exec dwm
 ```
