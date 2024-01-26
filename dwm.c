@@ -38,9 +38,7 @@
 #define CROI_PATCH_CYCLE_WALLPAPER_IMPL_H
 
 #include "components/main_drw.h"
-#include "components/main_enums.h"
 #include "components/main_macros.h"
-#include "components/main_un_structs.h"
 #include "components/main_util.h"
 
 #include "components/patch_awesome_bar.h"
@@ -58,7 +56,6 @@
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>
 #include <locale.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -77,7 +74,7 @@ struct NumTags
     char limitexceeded[LENGTH(tags) > 31 ? -1 : 1];
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     if (argc == 2 && !strcmp("-v", argv[1]))
         die("dwm-" VERSION);

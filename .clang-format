@@ -1,4 +1,3 @@
-BasedOnStyle: WebKit
 ColumnLimit: 80
 IndentWidth: 4
 
@@ -7,7 +6,6 @@ AlignArrayOfStructures: Left
 AlignEscapedNewlines: true
 AlignOperands: true
 AllowShortFunctionsOnASingleLine: false
-AlignTrailingComments: true
 AlignTrailingComments: true
 BreakBeforeBraces: Allman
 IndentCaseLabels: false
@@ -24,4 +22,4 @@ AlignConsecutiveMacros:
     AcrossEmptyLines: true
 
 BraceWrapping:
-  AfterEnum: false  
+    AfterEnum: false
