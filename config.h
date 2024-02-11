@@ -3,21 +3,16 @@
 
 #include "dwm.h"
 
-#define CROI_DWM_CMDS_IMPL_H
-
 #include "components/main_enums.h"
 #include "components/main_macros.h"
 #include "components/main_un_structs.h"
 #include "components/main_util.h"
-
 #include "components/patch_awesome_bar.h"
 #include "components/patch_client_opacity.h"
 #include "components/patch_cycle_wallpaper.h"
 #include "components/patch_restart_sig.h"
 #include "components/patch_rotate_stack.h"
 #include "components/patch_systray.h"
-
-#include "components/opts_commands.h"
 
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
@@ -54,11 +49,11 @@ const char *fonts[]               = {
     "Fira Code:style=Medium,Regular:size=7",
 };
 
-const char col_gray1[]  = "#222222"; /* bg col */
-const char col_gray2[]  = "#444444"; /* border col */
-const char col_gray3[]  = "#bbbbbb"; /* font col */
-const char col_gray4[]  = "#eeeeee"; /* tag & win title font col */
-const char col_cyan[]   = "#005577"; /* tag & win title bg col */
+const char col_gray1[] = "#222222"; /* bg col */
+const char col_gray2[] = "#444444"; /* border col */
+const char col_gray3[] = "#bbbbbb"; /* font col */
+const char col_gray4[] = "#eeeeee"; /* tag & win title font col */
+const char col_cyan[]  = "#005577"; /* tag & win title bg col */
 
 // Win 3.11 Scheme {{
 // const char col_gray1[]            = "#d3d7cf";
@@ -74,12 +69,33 @@ const char col_cyan[]   = "#005577"; /* tag & win title bg col */
 //"Fixedsys Excelsior:size=13:antialias=true:autohint=false";
 // }}
 
+const Arg down_vol =
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%- && pkill -RTMIN+7 dwmblocks");
+const Arg raise_vol =
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%+ && pkill -RTMIN+7 dwmblocks");
+const Arg mute_vol =
+    SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+7 dwmblocks");
+const Arg max_vol =
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 100% && pkill -RTMIN+7 dwmblocks");
+const Arg zero_vol =
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && pkill -RTMIN+7 dwmblocks");
+
+const Arg dimmer = SHCMD("xbacklight - 5%");
+const Arg bright = SHCMD("xbacklight + 5%");
+
+const Arg scrot  = SHCMD("scrot ~/Pictures/'Screenshot_%Y-%m-%d_%H_%M_%S.png'");
+
+const Arg termcmd = SHCMD("kitty");
+const Arg thunar  = SHCMD("thunar");
+const Arg spotify = SHCMD("LD_PRELOAD=/usr/lib/spotify-adblock.so spotify");
+const Arg firefox = SHCMD("firefox");
+
 const char *colors[][3] = {
-    /*               fg         bg         border   */
+  /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
     [SchemeSel]  = {col_gray4, col_cyan,  col_cyan },
-    //[SchemeNorm] = {col_gray3, col_gray1, col_cyan },
-    //[SchemeSel]  = {col_gray4, col_cyan,  col_gray2},
+ //[SchemeNorm] = {col_gray3, col_gray1, col_cyan },
+  //[SchemeSel]  = {col_gray4, col_cyan,  col_gray2},
     [SchemeHov]  = {col_gray4, col_cyan,  col_cyan },
     [SchemeHid]  = {col_cyan,  col_gray1, col_cyan },
 };
@@ -93,13 +109,13 @@ const char *tags[] = {"", "󰙯", "", "󰖴", "5",
 // #ifdef DWM_CONFIG_IMPL_H
 
 const Rule rules[] = {
-    /* xprop(1):
-     *	WM_CLASS(STRING) = instance, class
-     *	WM_NAME(STRING) = title
-     */
+  /* xprop(1):
+  *	WM_CLASS(STRING) = instance, class
+  *	WM_NAME(STRING) = title
+  */
 
-    /* class  instance  title  tags  mask  isfloating  focusopacity
-    unfocusedopacity  monitor */
+  /* class  instance  title  tags  mask  isfloating  focusopacity
+  unfocusedopacity  monitor */
     {"kitty",   NULL, NULL, 1 << 0, 0, activeopacity,   activeopacity,   -1},
     {"discord", NULL, NULL, 1 << 1, 0, inactiveopacity, inactiveopacity, -1},
     {"feh",     NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
@@ -118,7 +134,7 @@ const int resizehints    = 1; /* 1 means respect size hints in tiled resizals */
 const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 const Layout layouts[]   = {
-    /* symbol     arrange function */
+  /* symbol     arrange function */
     {"TILED", tile   }, /* first entry is default */
     {"FLOAT", NULL   }, /* no layout function means floating behavior */
     {"[M]",   monocle},
@@ -131,7 +147,7 @@ const char *dmenucmd[] = {
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 
 Key keys[] = {
-    /* modifier                     key        function        argument */
+  /* modifier                     key        function        argument */
     {ALTKEY,               XK_b,                     spawn,                    firefox           },
     {ALTKEY,               XK_e,                     spawn,                    thunar            },
     {ALTKEY,               XK_m,                     spawn,                    spotify           },
@@ -158,7 +174,7 @@ Key keys[] = {
     {MODKEY | ShiftMask,   XK_Return,                spawn,                    termcmd           },
     {MODKEY,               XK_b,                     togglebar,                {0}               },
 
-    /* People might get confused by this decision */
+ /* People might get confused by this decision */
     {MODKEY,               XK_j,                     focusstackhid,            {.i = -1}         },
     {MODKEY,               XK_k,                     focusstackhid,            {.i = +1}         },
     {MODKEY | ShiftMask,   XK_j,                     rotatestack,              {.i = -1}         },
@@ -202,7 +218,7 @@ Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
 Button buttons[] = {
-    /* click       event mask  button  function            argument */
+  /* click       event mask  button  function            argument */
     {ClkLtSymbol,   0,      Button1, setlayout,      {0}               },
     {ClkLtSymbol,   0,      Button3, setlayout,      {.v = &layouts[2]}},
     {ClkTagBar,     MODKEY, Button1, tag,            {0}               },

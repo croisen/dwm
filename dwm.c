@@ -29,6 +29,7 @@
 #define DWM_DRW_IMPL_H
 #define DWM_UTIL_IMPL_H
 
+#define PATCH_AUTOSTART_IMPL_H
 #define PATCH_AWESOME_BAR_IMPL_H
 #define PATCH_CLIENT_OPACITY_IMPL_H
 #define PATCH_RESTART_SIG_IMPL_H
@@ -41,6 +42,7 @@
 #include "components/main_macros.h"
 #include "components/main_util.h"
 
+#include "components/patch_autostart.h"
 #include "components/patch_awesome_bar.h"
 #include "components/patch_client_opacity.h"
 #include "components/patch_cycle_wallpaper.h"

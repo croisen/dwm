@@ -12,9 +12,6 @@ dwm:
 
 clean:
 	rm -f dwm
-	rm -f *.o
-	rm -f component/*.o
-	rm -f component/patch_comps/*.o
 	rm -f dwm-${VERSION}.tar.gz
 
 dist: clean
@@ -27,6 +24,7 @@ dist: clean
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
+	mkdir -p /usr/share/xsessions
 	cp -f dwm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
