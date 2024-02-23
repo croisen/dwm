@@ -10,7 +10,7 @@ extern void runautostart(void);
 const char autostartblocksh[] = "autostart_blocking.sh";
 const char autostartsh[]      = "autostart.sh";
 const char dwmdir[]           = "dwm";
-const char localshare[]       = ".local/share";
+const char config_dir[]       = ".config";
 
 void runautostart(void)
 {
@@ -27,7 +27,7 @@ void runautostart(void)
     /* if $XDG_DATA_HOME is set and not empty, use $XDG_DATA_HOME/dwm,
      * otherwise use ~/.local/share/dwm as autostart script directory
      */
-    xdgdatahome = getenv("XDG_DATA_HOME");
+    xdgdatahome = getenv("XDG_CONFIG_HOME");
     if (xdgdatahome != NULL && *xdgdatahome != '\0')
     {
         /* space for path segments, separators and nul */
@@ -43,9 +43,9 @@ void runautostart(void)
     {
         /* space for path segments, separators and nul */
         pathpfx =
-            ecalloc(1, strlen(home) + strlen(localshare) + strlen(dwmdir) + 3);
+            ecalloc(1, strlen(home) + strlen(config_dir) + strlen(dwmdir) + 3);
 
-        if (sprintf(pathpfx, "%s/%s/%s", home, localshare, dwmdir) < 0)
+        if (sprintf(pathpfx, "%s/%s/%s", home, config_dir, dwmdir) < 0)
         {
             free(pathpfx);
             return;
