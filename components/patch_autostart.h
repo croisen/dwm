@@ -24,8 +24,8 @@ void runautostart(void)
         /* this is almost impossible */
         return;
 
-    /* if $XDG_DATA_HOME is set and not empty, use $XDG_DATA_HOME/dwm,
-     * otherwise use ~/.local/share/dwm as autostart script directory
+    /* if $XDG_CONFIG_HOME is set and not empty, use $XDG_CONFIG_HOME/dwm,
+     * otherwise use ~/.config/dwm as autostart script directory
      */
     xdgdatahome = getenv("XDG_CONFIG_HOME");
     if (xdgdatahome != NULL && *xdgdatahome != '\0')

@@ -175,15 +175,18 @@ void applyrules(Client *c)
     Monitor *m;
     XClassHint ch     = {NULL, NULL};
 
-    /* rule matching */
     c->isfloating     = 0;
     c->tags           = 0;
-    c->opacity        = activeopacity;
-    c->unfocusopacity = inactiveopacity;
+
+    /* Set the default opacity to 100% */
+    c->opacity        = 1.0F;
+    c->unfocusopacity = 1.0F;
+
     XGetClassHint(dpy, c->win, &ch);
     class_name = ch.res_class ? ch.res_class : broken;
     instance   = ch.res_name ? ch.res_name : broken;
 
+    /* rule matching */
     for (i = 0; i < LENGTH(rules); i++)
     {
         r = &rules[i];
@@ -201,6 +204,7 @@ void applyrules(Client *c)
                 c->mon = m;
         }
     }
+
     if (ch.res_class)
         XFree(ch.res_class);
     if (ch.res_name)
