@@ -1,7 +1,7 @@
 #ifndef CROI_PATCH_CYCLE_WALLPAPER_H
 #define CROI_PATCH_CYCLE_WALLPAPER_H
 
-#include "wallpapers.h"
+#include "../other_conf/wallpapers.h"
 
 #include "main_un_structs.h"
 

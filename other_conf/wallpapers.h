@@ -9,9 +9,11 @@ static const char *wallpapers[] = {
     "~/git/croisen/wallpapers/croi-desktop/'Black Desert - Snow Knight.png'",
     "~/git/croisen/wallpapers/croi-desktop/'OS - Linux Mint.png'",
     "~/git/croisen/wallpapers/croi-desktop/'Glows in the Dark.png'",
-    "~/git/croisen/wallpapers/croi-desktop/'Gruvbox - Pacman.png'",
     "~/git/croisen/wallpapers/croi-desktop/aqw-chronos.png",
     "~/git/croisen/wallpapers/croi-desktop/'Cyberpunk - Rainy Street.png'",
+    "~/git/croisen/wallpapers/kuroi-desktop/'Monochrome 0.png'",
+    "~/git/croisen/wallpapers/kuroi-desktop/'Monochrome 1.png'",
+    "~/git/croisen/wallpapers/kuroi-desktop/'Monochrome 2.png'",
 };
 
 #endif
