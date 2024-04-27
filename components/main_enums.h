@@ -13,7 +13,6 @@ enum
 {
     SchemeNorm,
     SchemeSel,
-    SchemeHov,
     SchemeHid
 }; /* color schemes */
 

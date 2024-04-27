@@ -8,7 +8,7 @@ typedef union
     int i;
     unsigned int ui;
     float f;
-    const void* v;
+    const void *v;
 } Arg;
 
 typedef struct
@@ -16,7 +16,7 @@ typedef struct
     unsigned int click;
     unsigned int mask;
     unsigned int button;
-    void (*func)(Arg* arg);
+    void (*func)(Arg *arg);
     Arg arg;
 } Button;
 
@@ -34,9 +34,9 @@ struct Client
     unsigned int tags;
     int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
     double opacity, unfocusopacity;
-    Client* next;
-    Client* snext;
-    Monitor* mon;
+    Client *next;
+    Client *snext;
+    Monitor *mon;
     Window win;
 };
 
@@ -44,14 +44,14 @@ typedef struct
 {
     unsigned int mod;
     KeySym keysym;
-    void (*func)(Arg*);
+    void (*func)(Arg *);
     Arg arg;
 } Key;
 
 typedef struct
 {
-    const char* symbol;
-    void (*arrange)(Monitor*);
+    const char *symbol;
+    void (*arrange)(Monitor *);
 } Layout;
 
 struct Monitor
@@ -71,20 +71,19 @@ struct Monitor
     int showbar;
     int topbar;
     int hidsel;
-    Client* clients;
-    Client* sel;
-    Client* hov;
-    Client* stack;
-    Monitor* next;
+    Client *clients;
+    Client *sel;
+    Client *stack;
+    Monitor *next;
     Window barwin;
-    const Layout* lt[2];
+    const Layout *lt[2];
 };
 
 typedef struct
 {
-    const char* class_name;
-    const char* instance;
-    const char* title;
+    const char *class_name;
+    const char *instance;
+    const char *title;
     unsigned int tags;
     int isfloating;
     double opacity, unfocusopacity;
@@ -94,7 +93,7 @@ typedef struct
 typedef struct
 {
     Window win;
-    Client* icons;
+    Client *icons;
 } Systray;
 
 #endif /*DWM_UNION_N_STRUCTS_H*/

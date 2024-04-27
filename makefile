@@ -3,21 +3,29 @@
 
 include config.mk
 
-MAIN				= dwm.c
+COMPONENTS			= dwm.c dwm-funcs.c ${wildcard components/*.c}
+COMPONENTS_O		= ${patsubst %.c,%.o,${COMPONENTS}}
 
 all: dwm
 
-dwm:
-	${CC} ${CFLAGS} -o $@ $(MAIN) $? ${INCS} ${LDFLAGS}
+dwm: ${COMPONENTS_O}
+	${CC} ${CFLAGS} -o $@ $? ${INCS} ${LDFLAGS}
+
+%.o: %.c
+	${CC} ${CFLAGS} -o $@ -c $< ${INCS}
 
 clean:
 	rm -f dwm
+	rm -f *.o
+	rm -f components/*.o
 	rm -f dwm-${VERSION}.tar.gz
 
 dist: clean
 	mkdir -p dwm-${VERSION}
-	cp -R LICENSE makefile README.md config.h dwm.1 dwm.c dwm.h transient.c\
-		wallpapers.h dwm.desktop components/ dwm-${VERSION}
+	cp -R LICENSE makefile README.md config.h dwm.1 dwm.desktop \
+		dwm.c dwm-funcs.c dwm-funcs.h other_conf components/ \
+		transient.c dwm-${VERSION}
+	rm -f dwm-${VERSION}/components/*.o dwn-${VERSION}/other_conf/*.o
 	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
 	gzip dwm-${VERSION}.tar
 	rm -rf dwm-${VERSION}
@@ -25,6 +33,9 @@ dist: clean
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	mkdir -p /usr/share/xsessions
+	mkdir -p /usr/share
+	cp -rf icons /usr/share
+	cp -rf themes /usr/share
 	cp -f dwm ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1

@@ -16,6 +16,17 @@ My own configuration of dwm, it's a mess and that's my fault
 -   [hackneyed-x11-cursors](https://gitlab.com/Enthymeme/hackneyed-x11-cursors.git)
 -   [Windows-3.11](https://github.com/B00merang-Project/Windows-3.11)
 
+## Patches
+
+-   [dwm-autostart-20210120-cb3f58a.diff](https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff)
+-   [dwm-awesomebar-20230431-6.4.diff](https://dwm.suckless.org/patches/awesomebar/dwm-awesomebar-20230431-6.4.diff)
+-   [dwm-clientopacity-6.4.diff](https:/clientopacity/dwm.suckless.org/patches/clientopacity/dwm-clientopacity-6.4.diff)
+-   [dwm-gaps-6.0.diff](https://dwm.suckless.org/patches/gaps/dwm-gaps-6.0.diff)
+-   [dwm-restartsig-20180523-6.2.diff](https://dwm.suckless.org/patches/restartsig/dwm-restartsig-20180523-6.2.diff)
+-   [dwm-rotatestack-20161021-ab9571b.diff](https://dwm.suckless.org/patches/rotatestack/dwm-rotatestack-20161021-ab9571b.diff)
+-   [dwm-systray-6.4.diff](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
+-   [dwm-win31theme-20220224-d39e2f3.diff](https://dwm.suckless.org/patches/dwm-win31theme-20220224-d39e2f3.diff)
+
 ## Build Requirements
 
 In order to build dwm you need the Xlib header files.
@@ -64,3 +75,5 @@ exec dwm
 
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
+Though I have messed with this way more than I should have and now configuration
+is done through the various files inside the other_conf directory here...

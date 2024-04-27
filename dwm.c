@@ -16,39 +16,14 @@
  * on each monitor. Each client contains a bit array to indicate the tags of a
  * client.
  *
- * Keys and tagging rules are organized as arrays and defined in config.h.
- *
  * To understand everything else, start reading main().
  */
 
-#include "config.h"
-
-#define DWM_IMPL_H
-#include "dwm.h"
-
-#define DWM_DRW_IMPL_H
-#define DWM_UTIL_IMPL_H
-
-#define PATCH_AUTOSTART_IMPL_H
-#define PATCH_AWESOME_BAR_IMPL_H
-#define PATCH_CLIENT_OPACITY_IMPL_H
-#define PATCH_RESTART_SIG_IMPL_H
-#define PATCH_ROTATE_STACK_IMPL_H
-#define PATCH_SYSTRAY_IMPL_H
-
-#define CROI_PATCH_CYCLE_WALLPAPER_IMPL_H
-
-#include "components/main_drw.h"
-#include "components/main_macros.h"
 #include "components/main_util.h"
-
 #include "components/patch_autostart.h"
-#include "components/patch_awesome_bar.h"
-#include "components/patch_client_opacity.h"
 #include "components/patch_cycle_wallpaper.h"
-#include "components/patch_restart_sig.h"
-#include "components/patch_rotate_stack.h"
-#include "components/patch_systray.h"
+#include "dwm-funcs.h"
+#include "other_conf/tags.h"
 
 #include <X11/Xatom.h>
 #include <X11/Xft/Xft.h>

@@ -1,9 +1,6 @@
-[submodule "submodules/classic95"]
-	path = submodules/classic95
-	url = https://github.com/quadpixels/classic95.git
-[submodule "submodules/hackneyed-x11-cursors"]
-	path = submodules/hackneyed-x11-cursors
-	url = https://gitlab.com/Enthymeme/hackneyed-x11-cursors.git
-[submodule "submodules/Windows-3.11"]
-	path = submodules/Windows-3.11
+[submodule "themes/windows-3.11"]
+	path = themes/windows-3.11
 	url = https://github.com/B00merang-Project/Windows-3.11.git
+[submodule "icons/classic95"]
+	path = icons/classic95
+	url = https://github.com/quadpixels/classic95.git

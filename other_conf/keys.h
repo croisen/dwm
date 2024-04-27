@@ -1,6 +1,10 @@
 #ifndef DWM_KEYS_H
 #define DWM_KEYS_H
 
+#include <X11/X.h>
+#include <X11/XF86keysym.h>
+#include <stdlib.h>
+
 #include "../components/main_enums.h"
 #include "../components/main_macros.h"
 #include "../components/main_un_structs.h"
@@ -11,14 +15,9 @@
 #include "../components/patch_restart_sig.h"
 #include "../components/patch_rotate_stack.h"
 #include "../components/patch_systray.h"
-
-#include "./commands.h"
-#include "./layouts.h"
-
-#include <stdlib.h>
-
-#include <X11/X.h>
-#include <X11/XF86keysym.h>
+#include "../dwm-funcs.h"
+#include "commands.h"
+#include "layouts.h"
 
 Key keys[] = {
   /* modifier                     key        function        argument */

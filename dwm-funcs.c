@@ -1,13 +1,3 @@
-#ifndef DWM_H
-#define DWM_H
-
-#include "components/main_drw.h"
-#include "components/main_enums.h"
-#include "components/main_macros.h"
-#include "components/main_un_structs.h"
-
-#include "components/patch_systray.h"
-
 #include <X11/Xatom.h>
 #include <X11/Xft/Xft.h>
 #include <X11/Xlib.h>
@@ -15,10 +5,8 @@
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>
-#include <errno.h>
 #include <locale.h>
 #include <signal.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,104 +19,20 @@
 #include <X11/extensions/Xinerama.h>
 #endif
 
-extern void applyrules(Client *c);
-extern int applysizehints(Client *c, int *x, int *y, int *w, int *h,
-                          int interact);
-extern void arrange(Monitor *m);
-extern void arrangemon(Monitor *m);
-extern void attach(Client *c);
-extern void attachstack(Client *c);
-extern void buttonpress(XEvent *e);
-extern void checkotherwm(void);
-extern void cleanup(void);
-extern void cleanupmon(Monitor *mon);
-extern void clientmessage(XEvent *e);
-extern void configure(Client *c);
-extern void configurenotify(XEvent *e);
-extern void configurerequest(XEvent *e);
-extern Monitor *createmon(void);
-extern void destroynotify(XEvent *e);
-extern void detach(Client *c);
-extern void detachstack(Client *c);
-extern Monitor *dirtomon(int dir);
-extern void drawbar(Monitor *m);
-extern void drawbars(void);
-extern void enternotify(XEvent *e);
-extern void expose(XEvent *e);
-extern void focus(Client *c);
-extern void focusin(XEvent *e);
-extern void focusmon(Arg *arg);
-extern void focusstack(int inc, int vis);
-extern Atom getatomprop(Client *c, Atom prop);
-extern int getrootptr(int *x, int *y);
-extern long getstate(Window w);
-extern int gettextprop(Window w, Atom atom, char *text, unsigned int size);
-extern void grabbuttons(Client *c, int focused);
-extern void grabkeys(void);
-extern void incnmaster(Arg *arg);
-extern void keypress(XEvent *e);
-extern void killclient(Arg *arg);
-extern void manage(Window w, XWindowAttributes *wa);
-extern void mappingnotify(XEvent *e);
-extern void maprequest(XEvent *e);
-extern void monocle(Monitor *m);
-extern void motionnotify(XEvent *e);
-extern void movemouse(Arg *arg);
-extern Client *nexttiled(Client *c);
-extern void pop(Client *c);
-extern void propertynotify(XEvent *e);
-extern void quit(Arg *arg);
-extern Monitor *recttomon(int x, int y, int w, int h);
-extern void resize(Client *c, int x, int y, int w, int h, int interact);
-extern void resizeclient(Client *c, int x, int y, int w, int h);
-extern void resizemouse(Arg *arg);
-extern void restack(Monitor *m);
-extern void run(void);
-extern void scan(void);
-// extern int sendevent(Client *c, Atom proto);
-extern void sendmon(Client *c, Monitor *m);
-extern void setclientstate(Client *c, long state);
-extern void setfocus(Client *c);
-extern void setfullscreen(Client *c, int fullscreen);
-extern void setlayout(Arg *arg);
-extern void setmfact(Arg *arg);
-extern void setup(void);
-extern void seturgent(Client *c, int urg);
-extern void spawn(Arg *arg);
-extern void tag(Arg *arg);
-extern void tagmon(Arg *arg);
-extern void tile(Monitor *m);
-extern void togglebar(Arg *arg);
-extern void togglefloating(Arg *arg);
-extern void toggletag(Arg *arg);
-extern void toggleview(Arg *arg);
-extern void togglewin(Arg *arg);
-extern void unfocus(Client *c, int setfocus);
-extern void unmanage(Client *c, int destroyed);
-extern void unmapnotify(XEvent *e);
-extern void updatebarpos(Monitor *m);
-extern void updatebars(void);
-extern void updateclientlist(void);
-extern int updategeom(void);
-extern void updatenumlockmask(void);
-extern void updatesizehints(Client *c);
-extern void updatestatus(void);
-extern void updatetitle(Client *c);
-extern void updatewindowtype(Client *c);
-extern void updatewmhints(Client *c);
-extern void view(Arg *arg);
-extern Client *wintoclient(Window w);
-extern Monitor *wintomon(Window w);
-extern int xerror(Display *dpy, XErrorEvent *ee);
-extern int xerrordummy(Display *dpy, XErrorEvent *ee);
-extern int xerrorstart(Display *dpy, XErrorEvent *ee);
-extern void zoom(Arg *arg);
+#include "components/main_drw.h"
+#include "components/main_enums.h"
+#include "components/main_macros.h"
+#include "components/main_un_structs.h"
+#include "components/main_util.h"
+#include "components/patch_awesome_bar.h"
+#include "components/patch_systray.h"
+#include "dwm-funcs.h"
+#include "other_conf/keys.h"
+#include "other_conf/window_rules.h"
 
-#endif /*DWM_H*/
+// May cause bugs in the future
+extern const char *tags[9];
 
-#ifdef DWM_IMPL_H
-
-/* variables */
 const char broken[] = "broken";
 char stext[256];
 int screen;
@@ -136,8 +40,17 @@ int sw, sh; /* X display screen geometry width, height */
 int bh;     /* bar height */
 int lrpad;  /* sum of left and right padding for text */
 int (*xerrorxlib)(Display *, XErrorEvent *);
-unsigned int numlockmask             = 0;
-
+unsigned int numlockmask = 0;
+Systray *systray         = NULL;
+Atom wmatom[WMLast], netatom[NetLast], xatom[XLast];
+int restart = 0;
+int running = 1;
+Cur *cursor[CurLast];
+Clr **scheme;
+Display *dpy;
+Drw *drw;
+Monitor *mons, *selmon;
+Window root, wmcheckwin;
 void (*handler[LASTEvent])(XEvent *) = {
     [ButtonPress]      = buttonpress,
     [ClientMessage]    = clientmessage,
@@ -155,17 +68,6 @@ void (*handler[LASTEvent])(XEvent *) = {
     [ResizeRequest]    = resizerequest,
     [UnmapNotify]      = unmapnotify,
 };
-Systray *systray = NULL;
-
-Atom wmatom[WMLast], netatom[NetLast], xatom[XLast];
-int restart = 0;
-int running = 1;
-Cur *cursor[CurLast];
-Clr **scheme;
-Display *dpy;
-Drw *drw;
-Monitor *mons, *selmon;
-Window root, wmcheckwin;
 
 void applyrules(Client *c)
 {
@@ -804,8 +706,6 @@ void drawbar(Monitor *m)
             {
                 if (!ISVISIBLE(c))
                     continue;
-                if (m->hov == c)
-                    scm = SchemeHov;
                 else if (m->sel == c)
                     scm = SchemeSel;
                 else if (HIDDEN(c))
@@ -1302,96 +1202,21 @@ void monocle(Monitor *m)
 
 void motionnotify(XEvent *e)
 {
-    int x, i;
     static Monitor *mon = NULL;
-    Client *c;
     Monitor *m;
     XMotionEvent *ev = &e->xmotion;
 
-    if (ev->window != selmon->barwin)
-    {
-        if (selmon->hov)
-        {
-            if (selmon->hov != selmon->sel)
-                XSetWindowBorder(dpy, selmon->hov->win,
-                                 scheme[SchemeNorm][ColBorder].pixel);
-            else
-                XSetWindowBorder(dpy, selmon->hov->win,
-                                 scheme[SchemeSel][ColBorder].pixel);
-
-            selmon->hov = NULL;
-            c           = wintoclient(ev->window);
-            m           = c ? c->mon : wintomon(ev->window);
-            drawbar(m);
-        }
-
-        if (ev->window == root)
-        {
-            if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon)
-            {
-                unfocus(selmon->sel, 1);
-                selmon = m;
-                focus(NULL);
-            }
-            mon = m;
-        }
-
+    if (ev->window != root)
         return;
+
+    if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon)
+    {
+        unfocus(selmon->sel, 1);
+        selmon = m;
+        focus(NULL);
     }
 
-    c = wintoclient(ev->window);
-    m = c ? c->mon : wintomon(ev->window);
-    c = m->clients;
-
-    x = 0, i = 0;
-    do
-        x += TEXTW(tags[i]);
-    while (ev->x >= x && ++i < LENGTH(tags));
-    if (i < LENGTH(tags) || ev->x < x + TEXTW(selmon->ltsymbol) ||
-        ev->x > selmon->ww - TEXTW(stext) + lrpad - 2)
-    {
-        if (selmon->hov)
-        {
-            if (selmon->hov != selmon->sel)
-                XSetWindowBorder(dpy, selmon->hov->win,
-                                 scheme[SchemeNorm][ColBorder].pixel);
-            else
-                XSetWindowBorder(dpy, selmon->hov->win,
-                                 scheme[SchemeSel][ColBorder].pixel);
-            selmon->hov = NULL;
-            drawbar(m);
-        }
-    }
-    else
-    {
-        x += TEXTW(selmon->ltsymbol);
-        if (c)
-        {
-            do
-            {
-                if (!ISVISIBLE(c))
-                    continue;
-                else
-                    x += (1.0 / (double)m->bt) * m->btw;
-            } while (ev->x > x && (c = c->next));
-            if (c)
-            {
-                if (selmon->hov)
-                {
-                    if (selmon->hov != selmon->sel)
-                        XSetWindowBorder(dpy, selmon->hov->win,
-                                         scheme[SchemeNorm][ColBorder].pixel);
-                    else
-                        XSetWindowBorder(dpy, selmon->hov->win,
-                                         scheme[SchemeSel][ColBorder].pixel);
-                }
-                selmon->hov = c;
-                XSetWindowBorder(dpy, c->win,
-                                 scheme[SchemeHov][ColBorder].pixel);
-            }
-        }
-        drawbar(m);
-    }
+    mon = m;
 }
 
 void movemouse(Arg *arg)
@@ -2536,5 +2361,3 @@ void zoom(Arg *arg)
         return;
     pop(c);
 }
-
-#endif /*DWM_IMPL_H*/

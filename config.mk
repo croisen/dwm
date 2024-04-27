@@ -21,5 +21,5 @@ INCS = -I${X11INC} -I${FREETYPEINC}
 LIBS = -L${X11LIB} ${FREETYPELIB} ${XINERAMALIBS} -lX11
 
 CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-CFLAGS   = -std=c99 -Wpedantic -Wall -Wno-deprecated-declarations -O3 ${INCS} ${CPPFLAGS}
+CFLAGS   = -std=c99 -Wpedantic -Wall -Wno-deprecated-declarations -O3 ${CPPFLAGS}
 LDFLAGS  = ${LIBS}

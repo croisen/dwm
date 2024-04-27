@@ -2,7 +2,7 @@
 #define DWM_TAGS_H
 
 /* tagging */
-const char *tags[] = {
+const char *tags[9] = {
     "", "󰙯", "", "󰖴", "5", "", "", "", "",
 };
 
