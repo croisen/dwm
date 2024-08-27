@@ -13,6 +13,9 @@ const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 
+const Arg rofi_run  = SHCMD("rofi -show run");
+const Arg rofi_drun = SHCMD("rofi -show drun");
+
 const Arg down_vol =
     SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%- && pkill -RTMIN+7 dwmblocks");
 const Arg raise_vol =

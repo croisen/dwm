@@ -40,10 +40,11 @@ Key keys[] = {
 
     {MODKEY | ControlMask, XK_o,                     changefocusopacity,       {.f = +0.025}     },
     {MODKEY | ShiftMask,   XK_o,                     changefocusopacity,       {.f = -0.025}     },
-    {MODKEY | ControlMask, XK_u | XK_o,              changeunfocusopacity,     {.f = +0.025}     },
-    {MODKEY | ShiftMask,   XK_u | XK_o,              changeunfocusopacity,     {.f = -0.025}     },
+    {MODKEY | ControlMask, XK_u,                     changeunfocusopacity,     {.f = +0.025}     },
+    {MODKEY | ShiftMask,   XK_u,                     changeunfocusopacity,     {.f = -0.025}     },
 
-    {MODKEY,               XK_r,                     spawn,                    {.v = dmenucmd}   },
+    {MODKEY,               XK_r,                     spawn,                    rofi_drun         },
+    {MODKEY | ShiftMask,   XK_r,                     spawn,                    rofi_run          },
     {MODKEY | ShiftMask,   XK_Return,                spawn,                    termcmd           },
     {MODKEY,               XK_b,                     togglebar,                {0}               },
 
@@ -60,9 +61,9 @@ Key keys[] = {
     {MODKEY,               XK_Return,                zoom,                     {0}               },
     {MODKEY,               XK_Tab,                   view,                     {0}               },
     {MODKEY | ShiftMask,   XK_c,                     killclient,               {0}               },
-    {MODKEY,               XK_t,                     setlayout,                {.v = &layouts[0]}},
-    {MODKEY,               XK_f,                     setlayout,                {.v = &layouts[1]}},
-    {MODKEY,               XK_m,                     setlayout,                {.v = &layouts[2]}},
+    {MODKEY,               XK_m,                     setlayout,                {.v = &layouts[0]}},
+    {MODKEY,               XK_t,                     setlayout,                {.v = &layouts[1]}},
+    {MODKEY,               XK_f,                     setlayout,                {.v = &layouts[2]}},
     {MODKEY,               XK_space,                 setlayout,                {0}               },
     {MODKEY | ShiftMask,   XK_space,                 togglefloating,           {0}               },
     {MODKEY,               XK_0,                     view,                     {.ui = ~0}        },
@@ -84,7 +85,7 @@ Key keys[] = {
     TAGKEYS(XK_8, 7),
     TAGKEYS(XK_9, 8),
     {MODKEY | ShiftMask,   XK_q,                     quit,                     {0}               },
-    {MODKEY | ShiftMask,   XK_r,                     quit,                     {1}               },
+    {MODKEY | ControlMask, XK_r,                     quit,                     {1}               },
 };
 
 /* button definitions */
