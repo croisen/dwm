@@ -29,8 +29,6 @@
 #include "components/main_macros.h"
 #include "components/main_un_structs.h"
 
-#include "components/patch_systray.h"
-
 /* variables */
 extern const char broken[];
 extern char stext[256];

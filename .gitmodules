@@ -1,6 +1,0 @@
-[submodule "themes/windows-3.11"]
-	path = themes/windows-3.11
-	url = https://github.com/B00merang-Project/Windows-3.11.git
-[submodule "icons/classic95"]
-	path = icons/classic95
-	url = https://github.com/quadpixels/classic95.git

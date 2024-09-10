@@ -1,9 +1,14 @@
 #include <stdlib.h>
 
 #include "../dwm-funcs.h"
-#include "../other_conf/appearance.h"
 #include "main_util.h"
 #include "patch_systray.h"
+
+extern const int systraypinningfailfirst;
+extern const int showsystray; /* 0 means no systray */
+extern const unsigned int systraypinning;
+extern const unsigned int systrayonleft;
+extern const unsigned int systrayspacing;
 
 unsigned int getsystraywidth()
 {
