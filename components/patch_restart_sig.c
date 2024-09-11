@@ -1,4 +1,5 @@
 #include "patch_restart_sig.h"
+
 #include "../dwm-funcs.h"
 #include "main_un_structs.h"
 

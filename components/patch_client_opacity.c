@@ -1,19 +1,19 @@
 #include <X11/Xlib.h>
 
+#include "patch_client_opacity.h"
+
 #include "../dwm-funcs.h"
 #include "main_un_structs.h"
-#include "patch_client_opacity.h"
 
 void opacity(Client *c, double opacity)
 {
-    if (opacity > 0.0f && opacity < 1.0f)
-    {
+    if (opacity > 0.0f && opacity < 1.0f) {
         unsigned long real_opacity[] = {opacity * 0xffffffff};
-        XChangeProperty(dpy, c->win, netatom[NetWMWindowsOpacity], XA_CARDINAL,
-                        32, PropModeReplace, (unsigned char *)real_opacity, 1);
-    }
-    else
-    {
+        XChangeProperty(
+            dpy, c->win, netatom[NetWMWindowsOpacity], XA_CARDINAL, 32,
+            PropModeReplace, (unsigned char *)real_opacity, 1
+        );
+    } else {
         XDeleteProperty(dpy, c->win, netatom[NetWMWindowsOpacity]);
     }
 }

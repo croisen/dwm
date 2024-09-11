@@ -3,24 +3,20 @@
 
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
-#include <stdlib.h>
 
 #include "../components/main_enums.h"
 #include "../components/main_macros.h"
 #include "../components/main_un_structs.h"
-#include "../components/main_util.h"
 #include "../components/patch_awesome_bar.h"
 #include "../components/patch_client_opacity.h"
 #include "../components/patch_cycle_wallpaper.h"
-#include "../components/patch_restart_sig.h"
 #include "../components/patch_rotate_stack.h"
-#include "../components/patch_systray.h"
 #include "../dwm-funcs.h"
 #include "commands.h"
 #include "layouts.h"
 
 Key keys[] = {
-  /* modifier                     key        function        argument */
+    /* modifier                     key        function        argument */
     {ALTKEY,               XK_b,                     spawn,                    firefox           },
     {ALTKEY,               XK_e,                     spawn,                    thunar            },
     {ALTKEY,               XK_m,                     spawn,                    spotify           },
@@ -48,7 +44,7 @@ Key keys[] = {
     {MODKEY | ShiftMask,   XK_Return,                spawn,                    termcmd           },
     {MODKEY,               XK_b,                     togglebar,                {0}               },
 
- /* People might get confused by this decision */
+    /* People might get confused by this decision */
     {MODKEY,               XK_j,                     focusstackhid,            {.i = -1}         },
     {MODKEY,               XK_k,                     focusstackhid,            {.i = +1}         },
     {MODKEY | ShiftMask,   XK_j,                     rotatestack,              {.i = -1}         },
@@ -92,7 +88,7 @@ Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
 Button buttons[] = {
-  /* click       event mask  button  function            argument */
+    /* click       event mask  button  function            argument */
     {ClkLtSymbol,   0,      Button1, setlayout,      {0}               },
     {ClkLtSymbol,   0,      Button3, setlayout,      {.v = &layouts[2]}},
     {ClkTagBar,     MODKEY, Button1, tag,            {0}               },

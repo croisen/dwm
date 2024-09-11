@@ -1,20 +1,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "patch_cycle_wallpaper.h"
+
 #include "../dwm-funcs.h"
 #include "../other_conf/wallpapers.h"
-#include "patch_cycle_wallpaper.h"
+#include "main_macros.h"
+#include "main_util.h"
 
 char main_cmd[]     = "feh --bg-scale --no-fehbg ";
 int wallpaper_index = 0;
 
-void set_wallpaper()
+void set_wallpaper(void)
 {
     const char *wall = wallpapers[wallpaper_index];
-    char *cmd = malloc((sizeof(main_cmd) + strlen(wall) + 1) * sizeof(char));
-    if (cmd == NULL)
-    {
-        // malloc didn't return a thing
+    char *cmd = ecalloc(sizeof(main_cmd) + strlen(wall) + 1, sizeof(char));
+    if (cmd == NULL) {
         return;
     }
 

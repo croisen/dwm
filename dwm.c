@@ -19,10 +19,13 @@
  * To understand everything else, start reading main().
  */
 
+#include "components/main_macros.h"
 #include "components/main_util.h"
 #include "components/patch_autostart.h"
 #include "components/patch_cycle_wallpaper.h"
+
 #include "dwm-funcs.h"
+
 #include "other_conf/tags.h"
 
 #include <X11/Xatom.h>
@@ -46,8 +49,7 @@
 #endif
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
-struct NumTags
-{
+struct NumTags {
     char limitexceeded[LENGTH(tags) > 31 ? -1 : 1];
 };
 
@@ -72,8 +74,7 @@ int main(int argc, char *argv[])
     set_wallpaper();
     run();
 
-    if (restart)
-    {
+    if (restart) {
         execvp(argv[0], argv);
     }
 

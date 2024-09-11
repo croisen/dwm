@@ -1,0 +1,6 @@
+-Wall
+-Wpedantic
+-Wextra
+-O3
+-g
+-I/usr/include/freetype2

@@ -1,5 +1,7 @@
 #include "patch_awesome_bar.h"
+
 #include "../dwm-funcs.h"
+#include "main_macros.h"
 
 void focusstackvis(Arg *arg)
 {
@@ -13,6 +15,8 @@ void focusstackhid(Arg *arg)
 
 void show(Arg *arg)
 {
+    (void)arg;
+
     if (selmon->hidsel)
         selmon->hidsel = 0;
     showwin(selmon->sel);
@@ -20,15 +24,15 @@ void show(Arg *arg)
 
 void showall(Arg *arg)
 {
+    (void)arg;
+
     Client *c      = NULL;
     selmon->hidsel = 0;
-    for (c = selmon->clients; c; c = c->next)
-    {
+    for (c = selmon->clients; c; c = c->next) {
         if (ISVISIBLE(c))
             showwin(c);
     }
-    if (!selmon->sel)
-    {
+    if (!selmon->sel) {
         for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next)
             ;
         if (c)
@@ -51,17 +55,14 @@ void showhide(Client *c)
 {
     if (!c)
         return;
-    if (ISVISIBLE(c))
-    {
+    if (ISVISIBLE(c)) {
         /* show clients top down */
         XMoveWindow(dpy, c->win, c->x, c->y);
         if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) &&
             !c->isfullscreen)
             resize(c, c->x, c->y, c->w, c->h, 0);
         showhide(c->snext);
-    }
-    else
-    {
+    } else {
         /* hide clients bottom up */
         showhide(c->snext);
         XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);

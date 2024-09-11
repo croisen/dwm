@@ -6,12 +6,14 @@ include config.mk
 COMPONENTS			= dwm.c dwm-funcs.c ${wildcard components/*.c}
 COMPONENTS_O		= ${patsubst %.c,%.o,${COMPONENTS}}
 
+HEADERS 			= ${wildcard *.h components/*.h other_conf/*.h}
+
 all: dwm
 
 dwm: ${COMPONENTS_O}
 	${CC} ${CFLAGS} -o $@ $? ${INCS} ${LDFLAGS}
 
-%.o: %.c
+%.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} -o $@ -c $< ${INCS}
 
 clean:

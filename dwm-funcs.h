@@ -8,13 +8,7 @@
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
 #include <X11/keysym.h>
-#include <errno.h>
-#include <locale.h>
-#include <signal.h>
 #include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -26,7 +20,6 @@
 
 #include "components/main_drw.h"
 #include "components/main_enums.h"
-#include "components/main_macros.h"
 #include "components/main_un_structs.h"
 
 /* variables */
@@ -104,8 +97,9 @@ void restack(Monitor *m);
 void run(void);
 void scan(void);
 // int sendevent(Client *c, Atom proto);
-int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3,
-              long d4);
+int sendevent(
+    Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4
+);
 void sendmon(Client *c, Monitor *m);
 void setclientstate(Client *c, long state);
 void setfocus(Client *c);

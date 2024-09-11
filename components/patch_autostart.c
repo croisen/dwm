@@ -4,9 +4,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "patch_autostart.h"
+
 #include "../other_conf/config_dirs.h"
 #include "main_util.h"
-#include "patch_autostart.h"
 
 void runautostart(void)
 {
@@ -24,46 +25,38 @@ void runautostart(void)
      * otherwise use ~/.config/dwm as autostart script directory
      */
     xdgdatahome = getenv("XDG_CONFIG_HOME");
-    if (xdgdatahome != NULL && *xdgdatahome != '\0')
-    {
+    if (xdgdatahome != NULL && *xdgdatahome != '\0') {
         /* space for path segments, separators and nul */
         pathpfx = ecalloc(1, strlen(xdgdatahome) + strlen(dwmdir) + 2);
 
-        if (sprintf(pathpfx, "%s/%s", xdgdatahome, dwmdir) <= 0)
-        {
+        if (sprintf(pathpfx, "%s/%s", xdgdatahome, dwmdir) <= 0) {
             free(pathpfx);
             return;
         }
-    }
-    else
-    {
+    } else {
         /* space for path segments, separators and nul */
         pathpfx =
             ecalloc(1, strlen(home) + strlen(config_dir) + strlen(dwmdir) + 3);
 
-        if (sprintf(pathpfx, "%s/%s/%s", home, config_dir, dwmdir) < 0)
-        {
+        if (sprintf(pathpfx, "%s/%s/%s", home, config_dir, dwmdir) < 0) {
             free(pathpfx);
             return;
         }
     }
 
     /* check if the autostart script directory exists */
-    if (!(stat(pathpfx, &sb) == 0 && S_ISDIR(sb.st_mode)))
-    {
+    if (!(stat(pathpfx, &sb) == 0 && S_ISDIR(sb.st_mode))) {
         /* the XDG conformant path does not exist or is no directory
          * so we try ~/.dwm instead
          */
         char *pathpfx_new = realloc(pathpfx, strlen(home) + strlen(dwmdir) + 3);
-        if (pathpfx_new == NULL)
-        {
+        if (pathpfx_new == NULL) {
             free(pathpfx);
             return;
         }
         pathpfx = pathpfx_new;
 
-        if (sprintf(pathpfx, "%s/.%s", home, dwmdir) <= 0)
-        {
+        if (sprintf(pathpfx, "%s/.%s", home, dwmdir) <= 0) {
             free(pathpfx);
             return;
         }
@@ -71,8 +64,7 @@ void runautostart(void)
 
     /* try the blocking script first */
     path = ecalloc(1, strlen(pathpfx) + strlen(autostartblocksh) + 2);
-    if (sprintf(path, "%s/%s", pathpfx, autostartblocksh) <= 0)
-    {
+    if (sprintf(path, "%s/%s", pathpfx, autostartblocksh) <= 0) {
         free(path);
         free(pathpfx);
     }
@@ -81,8 +73,7 @@ void runautostart(void)
         system(path);
 
     /* now the non-blocking script */
-    if (sprintf(path, "%s/%s", pathpfx, autostartsh) <= 0)
-    {
+    if (sprintf(path, "%s/%s", pathpfx, autostartsh) <= 0) {
         free(path);
         free(pathpfx);
     }
