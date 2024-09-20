@@ -1076,7 +1076,7 @@ void manage(Window w, XWindowAttributes *wa)
     );
     grabbuttons(c, 0);
     c->wasfloating = False;
-    c->ismax = False;
+    c->ismax       = False;
 
     if (!c->isfloating)
         c->isfloating = c->oldstate = trans != None || c->isfixed;
