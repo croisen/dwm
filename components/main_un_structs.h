@@ -3,16 +3,14 @@
 
 #include <X11/X.h>
 
-typedef union
-{
+typedef union {
     int i;
     unsigned int ui;
     float f;
     const void *v;
 } Arg;
 
-typedef struct
-{
+typedef struct {
     unsigned int click;
     unsigned int mask;
     unsigned int button;
@@ -23,8 +21,7 @@ typedef struct
 typedef struct Monitor Monitor;
 typedef struct Client Client;
 
-struct Client
-{
+struct Client {
     char name[256];
     float mina, maxa;
     int x, y, w, h;
@@ -32,7 +29,8 @@ struct Client
     int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
     int bw, oldbw;
     unsigned int tags;
-    int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+    int ismax, wasfloating, isfixed, isfloating, isurgent, neverfocus, oldstate,
+        isfullscreen;
     double opacity, unfocusopacity;
     Client *next;
     Client *snext;
@@ -40,22 +38,19 @@ struct Client
     Window win;
 };
 
-typedef struct
-{
+typedef struct {
     unsigned int mod;
     KeySym keysym;
     void (*func)(Arg *);
     Arg arg;
 } Key;
 
-typedef struct
-{
+typedef struct {
     const char *symbol;
     void (*arrange)(Monitor *);
 } Layout;
 
-struct Monitor
-{
+struct Monitor {
     char ltsymbol[16];
     float mfact;
     int nmaster;
@@ -79,8 +74,7 @@ struct Monitor
     const Layout *lt[2];
 };
 
-typedef struct
-{
+typedef struct {
     const char *class_name;
     const char *instance;
     const char *title;
@@ -90,8 +84,7 @@ typedef struct
     int monitor;
 } Rule;
 
-typedef struct
-{
+typedef struct {
     Window win;
     Client *icons;
 } Systray;

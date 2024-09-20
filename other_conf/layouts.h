@@ -13,8 +13,8 @@ const int resizehints    = 1; /* 1 means respect size hints in tiled resizals */
 const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 const Layout layouts[]   = {
     /* symbol     arrange function */
-    {"[M]",   monocle}, /* first entry is default */
-    {"TILED", tile   },
+    {"TILED", tile   }, /* first entry is default */
+    {"[M]",   monocle},
     {"FLOAT", NULL   }, /* no layout function means floating behavior */
 };
 
