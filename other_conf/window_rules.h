@@ -17,6 +17,7 @@ const Rule rules[] = {
     {"kitty",        NULL, NULL, 1 << 0, 0, activeopacity,   inactiveopacity, -1},
 
     {"discord",      NULL, NULL, 1 << 1, 0, inactiveopacity, inactiveopacity, -1},
+    {"vesktop",      NULL, NULL, 1 << 1, 0, inactiveopacity, inactiveopacity, -1},
 
     {"feh",          NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},
     {"Eog",          NULL, NULL, 1 << 2, 0, inactiveopacity, inactiveopacity, -1},

@@ -18,15 +18,15 @@ const Arg rofi_run     = SHCMD("rofi -show run");
 const Arg rofi_drun    = SHCMD("rofi -show drun");
 
 const Arg down_vol =
-    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%- && pkill -RTMIN+7 dwmblocks");
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%- && pkill -RTMIN+7 slstatus");
 const Arg raise_vol =
-    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%+ && pkill -RTMIN+7 dwmblocks");
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 2%+ && pkill -RTMIN+7 slstatus");
 const Arg mute_vol =
-    SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+7 dwmblocks");
+    SHCMD("wpctl set-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+7 slstatus");
 const Arg max_vol =
-    SHCMD("wpctl set-volume @DEFAULT_SINK@ 100% && pkill -RTMIN+7 dwmblocks");
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 100% && pkill -RTMIN+7 slstatus");
 const Arg zero_vol =
-    SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && pkill -RTMIN+7 dwmblocks");
+    SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && pkill -RTMIN+7 slstatus");
 
 const Arg dimmer = SHCMD("xbacklight - 5%");
 const Arg bright = SHCMD("xbacklight + 5%");
