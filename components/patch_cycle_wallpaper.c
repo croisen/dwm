@@ -1,30 +1,35 @@
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <wordexp.h>
 
 #include "patch_cycle_wallpaper.h"
 
-#include "../dwm-funcs.h"
 #include "../other_conf/wallpapers.h"
-#include "main_macros.h"
 #include "main_util.h"
 
-char main_cmd[]     = "feh --bg-scale --no-fehbg ";
-int wallpaper_index = 0;
+volatile int wallpaper_index = 0;
 
 void set_wallpaper(void)
 {
     const char *wall = wallpapers[wallpaper_index];
-    char *cmd = ecalloc(sizeof(main_cmd) + strlen(wall) + 1, sizeof(char));
-    if (cmd == NULL) {
-        return;
+    wordexp_t w      = {0};
+    wordexp(wall, &w, WRDE_NOCMD);
+
+    pid_t p = fork();
+    if (p < 0)
+        die("fork(): failed to create process to change wallpaper\n");
+
+    if (p == 0) {
+        char *const a[5] = {
+            "feh", "--no-fehbg", "--bg-scale", w.we_wordv[0], NULL
+        };
+        execvp(*a, a);
+        exit(errno);
     }
 
-    strcpy(cmd, main_cmd);
-    strcat(cmd, wall);
-
-    Arg arg = SHCMD(cmd);
-    spawn(&arg);
-    free(cmd);
+    wordfree(&w);
 }
 
 void cycle_wallpaper_forward(Arg *arg)
