@@ -5,8 +5,6 @@
 
 static const char *wallpapers[] = {
     "~/.config/dwm/wall-dark.png",
-    "~/git/croisen/wallpapers/croi-desktop/Black_Desert_-_Snow_Knight.png",
-    "~/git/croisen/wallpapers/croi-desktop/Glows_in_the_Dark.png",
 };
 
 #endif

@@ -4,8 +4,8 @@
 #include "../components/main_enums.h"
 
 /* appearance */
-const unsigned int borderpx       = 5;  /* border pixel of windows */
-const unsigned int gappx          = 10; /* window gaps */
+const unsigned int borderpx       = 2;  /* border pixel of windows */
+const unsigned int gappx          = 5;  /* window gaps */
 const unsigned int snap           = 32; /* snap pixel */
 
 /* Window opacity when it's focused (0 <= opacity <= 1) */
@@ -18,23 +18,18 @@ const unsigned int systraypinning = 0;
 /* 0: systray in the right corner, >0: systray on left of status text */
 const unsigned int systrayonleft  = 1;
 const unsigned int systrayspacing = 2; /* systray spacing */
-
-/*
- * 1: if pinning fails, display systray on the first monitor, False: display
- * systray on the last monitor
- */
-const int systraypinningfailfirst = 1;
+const int systraypinningfailfirst = 1; /* pin to first monitor when it fails */
 const int showsystray             = 1; /* 0 means no systray */
 
 const int showbar                 = 1; /* 0 means no bar */
 const int topbar                  = 1; /* 0 means bottom bar */
 
 // Default colors and fonts?
-const char dmenufont[]            = "monospace:size=7";
+const char dmenufont[]            = "monospace:size=7.5";
 const char *fonts[]               = {
-    "monospace:size=7",
-    "MesloLGS Nerd Font:size=7",
-    "Fira Code:style=Medium,Regular:size=7",
+    "monospace:size=7.5",
+    "MesloLGS Nerd Font:size=7.5",
+    "Fira Code:style=Medium,Regular:size=7.5",
 };
 const char col_gray1[]  = "#222222"; /* bg col */
 const char col_gray2[]  = "#444444"; /* border col */
