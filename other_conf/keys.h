@@ -33,6 +33,10 @@ Key keys[] = {
     {ShiftMask,            XF86XK_AudioRaiseVolume,  spawn,                    max_vol      },
     {0,                    XF86XK_AudioLowerVolume,  spawn,                    down_vol     },
     {ShiftMask,            XF86XK_AudioLowerVolume,  spawn,                    zero_vol     },
+    {0,                    XF86XK_AudioPlay,         spawn,                    s_play       },
+    {0,                    XF86XK_AudioStop,         spawn,                    s_stop       },
+    {0,                    XF86XK_AudioPrev,         spawn,                    s_prev       },
+    {0,                    XF86XK_AudioNext,         spawn,                    s_next       },
 
     {0,                    XF86XK_MonBrightnessUp,   spawn,                    bright       },
     {0,                    XF86XK_MonBrightnessDown, spawn,                    dimmer       },

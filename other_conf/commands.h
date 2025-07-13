@@ -27,9 +27,13 @@ const Arg max_vol =
     SHCMD("wpctl set-volume @DEFAULT_SINK@ 100% && pkill -RTMIN+7 slstatus");
 const Arg zero_vol =
     SHCMD("wpctl set-volume @DEFAULT_SINK@ 0% && pkill -RTMIN+7 slstatus");
+const Arg s_play = SHCMD("playerctl --all-players play-pause");
+const Arg s_stop = SHCMD("playerctl --all-players stop");
+const Arg s_prev = SHCMD("playerctl --all-players previous");
+const Arg s_next = SHCMD("playerctl --all-players next");
 
-const Arg dimmer = SHCMD("xbacklight - 5%");
-const Arg bright = SHCMD("xbacklight + 5%");
+const Arg dimmer = SHCMD("brightnessctl set 5%-");
+const Arg bright = SHCMD("brightnessctl set +5%");
 
 const Arg scrot  = SHCMD("scrot ~/Pictures/'Screenshot_%Y-%m-%d_%H_%M_%S.png'");
 
