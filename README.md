@@ -75,5 +75,3 @@ exec dwm
 
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
-Though I have messed with this way more than I should have and now configuration
-is done through the various files inside the other_conf directory here...
