@@ -44,6 +44,11 @@ static const char *colors[][3] = {
     [SchemeHid]  = {col_cyan,  col_gray1, col_cyan },
 };
 
+static const char *wallpapers[] = {
+    "~/.config/dwm/wall-dark.png",
+    "~/.config/dwm/wall-light.png",
+};
+
 /* tagging */
 const char *tags[]        = {"", "󰙯", "", "󰖴", "💻",
                              "", "",  "", ""};
@@ -56,35 +61,39 @@ static const Rule rules[] = {
 
     /* class  instance  title  tags  mask  isfloating  focusopacity
         unfocusedopacity  monitor */
-    {"kitty",        NULL, NULL, 1 << 0, 0, fopac, fopac, -1},
+    {"Xdg-desktop-portal-gtk", NULL, NULL, 0, fopac, fopac, -1},
 
-    {"discord",      NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
-    {"vesktop",      NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
+    {"kitty", NULL, NULL, 1 << 0, 0, fopac, fopac, -1},
 
-    {"feh",          NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
-    {"Eog",          NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
-    {"Thunar",       NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"discord", NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
+    {"vesktop", NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
 
-    {"soffice",      NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
-    {"libreoffice",  NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
-    {"Gimp",         NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"feh", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"Eog", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"Thunar", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
 
-    {"obs",          NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
+    {"soffice", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"libreoffice", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"Gimp", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+
+    {"obs", NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
     {"Virt-manager", NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
 
-    {"qprompt",      NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
-    {"thunderbird",  NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
+    {"qprompt", NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
+    {"thunderbird", NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
 
-    {"steam",        NULL, NULL, 1 << 6, 0, fopac, fopac, -1},
+    {"steam", NULL, NULL, 1 << 6, 0, fopac, fopac, -1},
 
-    {"Audacious",    NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
-    {"Spotify",      NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
+    {"Audacious", NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
+    {"Spotify", NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
 
-    {"firefox",      NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"Chromium", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"firefox", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"librewolf", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
 };
 
 /* layout(s) */
-static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;    /* number of clients in master area */
 static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
@@ -99,8 +108,8 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
-#define ALTKEY Mod4Mask
+#define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY, TAG)                                                      \
     {MODKEY, KEY, view, {.ui = 1 << TAG}},                                     \
         {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},             \
@@ -155,6 +164,8 @@ static const Key keys[] = {
     {ALTKEY,               XK_b,                     spawn,                {.v = firefox}    },
     {ALTKEY,               XK_e,                     spawn,                {.v = thunar}     },
     {ALTKEY,               XK_m,                     spawn,                spotify           },
+    {ALTKEY,               XK_w,                     cyclewallpaper,       {.i = +1}         },
+    {ALTKEY | ShiftMask,   XK_w,                     cyclewallpaper,       {.i = -1}         },
 
     {0,                    XK_Print,                 spawn,                scrot             },
 
@@ -206,7 +217,7 @@ static const Key keys[] = {
     {MODKEY | ShiftMask,   XK_period,                tagmon,               {.i = +1}         },
     {MODKEY,               XK_s,                     show,                 {0}               },
     {MODKEY | ShiftMask,   XK_s,                     showall,              {0}               },
-    {MODKEY,               XK_h,                     hide,                 {0}               },
+    {MODKEY | ShiftMask,   XK_h,                     hide,                 {0}               },
 
     TAGKEYS(XK_1, 0),
     TAGKEYS(XK_2, 1),

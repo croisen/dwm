@@ -39,6 +39,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <wordexp.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
 #endif /* XINERAMA */
@@ -221,6 +222,7 @@ static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
+static void cyclewallpaper(const Arg *arg);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -280,6 +282,7 @@ static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
+static void setwallpaper(void);
 static void show(const Arg *arg);
 static void showall(const Arg *arg);
 static void showwin(Client *c);
@@ -323,6 +326,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 
 /* variables */
+static int wall_idx        = 0;
 static Systray *systray    = NULL;
 static const char broken[] = "broken";
 static char stext[256];
@@ -861,6 +865,14 @@ Monitor *createmon(void)
     m->lt[1]                    = &layouts[1 % LENGTH(layouts)];
     strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
     return m;
+}
+
+// wallpaper
+static void cyclewallpaper(const Arg *arg)
+{
+    // +1 for forwards and -1 for backwards cycle
+    wall_idx = (wall_idx + LENGTH(wallpapers) + arg->i) % LENGTH(wallpapers);
+    setwallpaper();
 }
 
 void destroynotify(XEvent *e)
@@ -2196,6 +2208,19 @@ void seturgent(Client *c, int urg)
     XFree(wmh);
 }
 
+// wallpaper
+static void setwallpaper(void)
+{
+    wordexp_t ex;
+    wordexp(wallpapers[wall_idx], &ex, WRDE_NOCMD);
+    Arg a = {
+        .v = (char *[]){"feh", "--bg-scale", "--no-fehbg", ex.we_wordv[0], NULL}
+    };
+
+    spawn(&a);
+    wordfree(&ex);
+}
+
 // awesomebar
 void show(const Arg *arg)
 {
@@ -2986,6 +3011,7 @@ int main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
     scan();
     runautostart();
+    setwallpaper();
     run();
     if (restart)
         execvp(argv[0], argv);
