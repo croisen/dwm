@@ -16,16 +16,15 @@ My own configuration of dwm, it's a mess and that's my fault
 
 ## Patches
 
--   [dwm-actualfullscreen-20211013-cb3f58a.diff](https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
--   [dwm-autostart-20210120-cb3f58a.diff](https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff)
--   [dwm-awesomebar-20230431-6.4.diff](https://dwm.suckless.org/patches/awesomebar/dwm-awesomebar-20230431-6.4.diff)
--   [dwm-clientopacity-6.4.diff](https:/clientopacity/dwm.suckless.org/patches/clientopacity/dwm-clientopacity-6.4.diff)
--   [dwm-gaps-6.0.diff](https://dwm.suckless.org/patches/gaps/dwm-gaps-6.0.diff)
--   [dwm-maximize_vert_horz-6.0.diff](https://dwm.suckless.org/patches/maximize/dwm-maximize_vert_horz-6.0.diff)
--   [dwm-restartsig-20180523-6.2.diff](https://dwm.suckless.org/patches/restartsig/dwm-restartsig-20180523-6.2.diff)
--   [dwm-rotatestack-20161021-ab9571b.diff](https://dwm.suckless.org/patches/rotatestack/dwm-rotatestack-20161021-ab9571b.diff)
--   [dwm-systray-6.4.diff](https://dwm.suckless.org/patches/systray/dwm-systray-6.4.diff)
--   [dwm-win31theme-20220224-d39e2f3.diff](https://dwm.suckless.org/patches/dwm-win31theme-20220224-d39e2f3.diff)
+Just search around the dwm patches page for these if you're curious
+
+-   actualfullscreen
+-   autostart
+-   awesomebar
+-   clientopacity
+-   gaps
+-   restartsig
+-   systray
 
 ## Build Requirements
 
