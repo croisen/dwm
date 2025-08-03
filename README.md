@@ -24,6 +24,7 @@ Just search around the dwm patches page for these if you're curious
 -   clientopacity
 -   gaps
 -   restartsig
+-   steam
 -   systray
 
 ## Build Requirements

@@ -143,6 +143,7 @@ struct Client {
     int bw, oldbw;
     unsigned int tags;
     int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+    int issteam;
     Client *next;
     Client *snext;
     double opacity;
@@ -282,7 +283,7 @@ static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
-static void setwallpaper(void);
+static void setwallpaper(char **extra_wallpapers);
 static void show(const Arg *arg);
 static void showall(const Arg *arg);
 static void showwin(Client *c);
@@ -388,6 +389,9 @@ void applyrules(Client *c)
     XGetClassHint(dpy, c->win, &ch);
     class    = ch.res_class ? ch.res_class : broken;
     instance = ch.res_name ? ch.res_name : broken;
+
+    if (strstr(class, "Steam") || strstr(class, "steam_app_"))
+        c->issteam = 1;
 
     for (i = 0; i < LENGTH(rules); i++) {
         r = &rules[i];
@@ -809,14 +813,17 @@ void configurerequest(XEvent *e)
             c->bw = ev->border_width;
         else if (c->isfloating || !selmon->lt[selmon->sellt]->arrange) {
             m = c->mon;
-            if (ev->value_mask & CWX) {
-                c->oldx = c->x;
-                c->x    = m->mx + ev->x;
+            if (!c->issteam) {
+                if (ev->value_mask & CWX) {
+                    c->oldx = c->x;
+                    c->x    = m->mx + ev->x;
+                }
+                if (ev->value_mask & CWY) {
+                    c->oldy = c->y;
+                    c->y    = m->my + ev->y;
+                }
             }
-            if (ev->value_mask & CWY) {
-                c->oldy = c->y;
-                c->y    = m->my + ev->y;
-            }
+
             if (ev->value_mask & CWWidth) {
                 c->oldw = c->w;
                 c->w    = ev->width;
@@ -871,8 +878,54 @@ Monitor *createmon(void)
 static void cyclewallpaper(const Arg *arg)
 {
     // +1 for forwards and -1 for backwards cycle
-    wall_idx = (wall_idx + LENGTH(wallpapers) + arg->i) % LENGTH(wallpapers);
-    setwallpaper();
+    char *home              = NULL;
+    char *slash_config      = "/.config/dwm/wallpapers.txt";
+    char *wall_p            = NULL;
+    FILE *wall              = NULL;
+    int count               = 0;
+    char **extra_wallpapers = NULL;
+    int len                 = LENGTH(wallpapers);
+
+    if ((home = getenv("HOME")) == NULL) {
+        fprintf(stderr, "HOME env var doesn't exist??\n");
+        return;
+    }
+
+    wall_p = ecalloc(1, strlen(home) + strlen(slash_config) + 1);
+    strcat(wall_p, home);
+    strcat(wall_p, slash_config);
+    wall = fopen(wall_p, "r");
+
+    if (wall != NULL) {
+        // I hope that ~/.config/dwm/wallpapers.txt has an extra newline
+        // at the end so that the last file is not ignored
+        for (char c = getc(wall); c != EOF; c = getc(wall))
+            if (c == '\n')
+                count += 1;
+
+        extra_wallpapers  = ecalloc(count, sizeof(char *));
+        len              += count;
+        fseek(wall, 0, SEEK_SET);
+        for (int i = 0; i < count; i++) {
+            char p[PATH_MAX];
+            int p_len = 0;
+
+            fgets(p, PATH_MAX, wall);
+            p_len               = strlen(p);
+            p_len               = (p[p_len - 1] == '\n') ? p_len - 1 : p_len;
+            extra_wallpapers[i] = ecalloc(1, p_len);
+            strncpy(extra_wallpapers[i], p, p_len);
+        }
+    }
+
+    wall_idx = (wall_idx + len + arg->i) % len;
+    setwallpaper(extra_wallpapers);
+
+    fclose(wall);
+    for (int i = 0; i < count; i++)
+        free(extra_wallpapers[i]);
+
+    free(extra_wallpapers);
 }
 
 void destroynotify(XEvent *e)
@@ -2209,10 +2262,16 @@ void seturgent(Client *c, int urg)
 }
 
 // wallpaper
-static void setwallpaper(void)
+static void setwallpaper(char **extra_wallpapers)
 {
     wordexp_t ex;
-    wordexp(wallpapers[wall_idx], &ex, WRDE_NOCMD);
+    if (wall_idx < LENGTH(wallpapers))
+        wordexp(wallpapers[wall_idx], &ex, WRDE_NOCMD);
+    else
+        wordexp(
+            extra_wallpapers[wall_idx - LENGTH(wallpapers)], &ex, WRDE_NOCMD
+        );
+
     Arg a = {
         .v = (char *[]){"feh", "--bg-scale", "--no-fehbg", ex.we_wordv[0], NULL}
     };
@@ -2224,6 +2283,8 @@ static void setwallpaper(void)
 // awesomebar
 void show(const Arg *arg)
 {
+    (void)arg;
+
     if (selmon->hidsel)
         selmon->hidsel = 0;
     showwin(selmon->sel);
@@ -2232,6 +2293,8 @@ void show(const Arg *arg)
 // awesomebar
 void showall(const Arg *arg)
 {
+    (void)arg;
+
     Client *c      = NULL;
     selmon->hidsel = 0;
     for (c = selmon->clients; c; c = c->next) {
@@ -3011,7 +3074,7 @@ int main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
     scan();
     runautostart();
-    setwallpaper();
+    setwallpaper(NULL);
     run();
     if (restart)
         execvp(argv[0], argv);

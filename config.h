@@ -13,7 +13,7 @@ static const unsigned int snap           = 32; /* snap pixel */
 /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systraypinning = 0;
 /* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayonleft  = 0;
+static const unsigned int systrayonleft  = 1;
 static const unsigned int systrayspacing = 2; /* systray spacing */
 /* 1: if pinning fails, display systray on the first monitor, False: display
  * systray on the last monitor*/
@@ -44,6 +44,8 @@ static const char *colors[][3] = {
     [SchemeHid]  = {col_cyan,  col_gray1, col_cyan },
 };
 
+// Also checks in ~/.config/dwm/wallpapers.txt for paths (it also supports
+// path expansion, though it would help if this text file ends in a newline)
 static const char *wallpapers[] = {
     "~/.config/dwm/wall-dark.png",
     "~/.config/dwm/wall-light.png",
@@ -61,35 +63,34 @@ static const Rule rules[] = {
 
     /* class  instance  title  tags  mask  isfloating  focusopacity
         unfocusedopacity  monitor */
-    {"Xdg-desktop-portal-gtk", NULL, NULL, 0, fopac, fopac, -1},
+    {"kitty",          NULL, NULL, 1 << 0, 0, fopac, fopac, -1},
 
-    {"kitty", NULL, NULL, 1 << 0, 0, fopac, fopac, -1},
+    {"discord",        NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
+    {"vesktop",        NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
 
-    {"discord", NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
-    {"vesktop", NULL, NULL, 1 << 1, 0, fopac, fopac, -1},
+    {"feh",            NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"Eog",            NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"Thunar",         NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
 
-    {"feh", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
-    {"Eog", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
-    {"Thunar", NULL, NULL, 1 << 2, 0, fopac, fopac, -1},
+    {"soffice",        NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"libreoffice",    NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"Gimp",           NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
 
-    {"soffice", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
-    {"libreoffice", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
-    {"Gimp", NULL, NULL, 1 << 3, 0, fopac, fopac, -1},
+    {"obs",            NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
+    {"Virt-manager",   NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
 
-    {"obs", NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
-    {"Virt-manager", NULL, NULL, 1 << 4, 0, fopac, fopac, -1},
+    {"qprompt",        NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
+    {"thunderbird",    NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
 
-    {"qprompt", NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
-    {"thunderbird", NULL, NULL, 1 << 5, 0, fopac, fopac, -1},
+    {"steam",          NULL, NULL, 1 << 6, 0, fopac, fopac, -1},
 
-    {"steam", NULL, NULL, 1 << 6, 0, fopac, fopac, -1},
+    {"Audacious",      NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
+    {"Spotify",        NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
 
-    {"Audacious", NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
-    {"Spotify", NULL, NULL, 1 << 7, 0, fopac, fopac, -1},
-
-    {"Chromium", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
-    {"firefox", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
-    {"librewolf", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"Chromium",       NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"firefox",        NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"librewolf",      NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
+    {"Vivaldi-stable", NULL, NULL, 1 << 8, 0, fopac, fopac, -1},
 };
 
 /* layout(s) */
